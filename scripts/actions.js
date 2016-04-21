@@ -18,7 +18,7 @@ var scarlett = {
 		});
 
 		$(document).on('pagebeforeshow', '#roomTemplate', function(){
-			$(document).on('slidestop', '.slider-int', function (e) {
+			$(document).off('slidestop', '.slider-int').on('slidestop', '.slider-int', function (e) {
 				var device = $(this).attr("daddr");
             	var value = document.getElementById($(this).attr("id")).value;
             	var control = $(this).attr("control");
