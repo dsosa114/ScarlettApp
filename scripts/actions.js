@@ -68,6 +68,15 @@ var scarlett = {
 				points:val,
 				control: con
 			},
+			async: true,
+            beforeSend: function() {
+                // This callback function will trigger before data is sent
+            	$.mobile.showPageLoadingMsg(true); // This will show ajax spinner
+            },
+            complete: function() {
+                // This callback function will trigger on data sent/received complete
+                $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+            },
 			error: function(e){
 				alert("Error de conexión con AJAX");
 				alert(e.response);
