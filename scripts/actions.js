@@ -6,8 +6,8 @@ var scarlett = {
 
 	onDeviceReady: function() {
         // Handle the Cordova pause and resume events
-        //document.addEventListener( 'pause', scarlett.onPause, false );
-        //document.addEventListener( 'resume', scarlett.onResume, false );
+        document.addEventListener( 'pause', scarlett.onPause, false );
+        document.addEventListener( 'resume', scarlett.onResume, false );
         
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
@@ -60,7 +60,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://localhost:2000/data",
+			url:"http://192.168.0.41:2000/data",
 			//url:"http://scarlett.local:2000/data",
 			//url:"http://192.168.42.1:2000/data",
 			data:{
@@ -74,7 +74,7 @@ var scarlett = {
 			}
 
 		}).done(function(mensaje){
-			console.log(mensaje);
+			alert(mensaje);
 		});
 	},
 
@@ -82,7 +82,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://localhost:2000/outlet",
+			url:"http://192.168.0.41:2000/outlet",
 			//url:"http://scarlett.local:2000/outlet",
 			//url:"http://192.168.42.1:2000/outlet",
 			data:{
@@ -96,7 +96,7 @@ var scarlett = {
 			}
 
 		}).done(function(mensaje){
-			console.log(mensaje);
+			alert(mensaje);
 		});
 	},
 
@@ -147,7 +147,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//$(scarlett.deviceready);
+//
+$(scarlett.deviceready);
 
 //Internet Explorer
-$(scarlett.onDeviceReady);
+//$(scarlett.onDeviceReady);
