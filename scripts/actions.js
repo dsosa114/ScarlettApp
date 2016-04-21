@@ -64,7 +64,7 @@ var scarlett = {
 			//url:"http://scarlett.local:2000/data",
 			//url:"http://192.168.42.1:2000/data",
 			data:{
-				mod:dev,
+				modules:dev,
 				points:val,
 				control: con
 			},
@@ -86,7 +86,7 @@ var scarlett = {
 			//url:"http://scarlett.local:2000/outlet",
 			//url:"http://192.168.42.1:2000/outlet",
 			data:{
-				mod:dev,
+				modules:dev,
 				encendido:val,
 				control: con
 			},
