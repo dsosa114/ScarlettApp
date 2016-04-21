@@ -68,11 +68,9 @@ var scarlett = {
 				points:val,
 				control: con
 			},
+			timeout: 500,
 			beforeSend: function(){
 				alert("Sending...");
-			},
-			complete: function(){
-				alert("Enviado, esperando respuesta...");
 			},
 			success: function(data){
 				alert(data);
