@@ -68,10 +68,18 @@ var scarlett = {
 				points:val,
 				control: con
 			},
-			async: true,
+			beforeSend: function(){
+				alert("Sending...");
+			},
+			complete: function(){
+				alert("Enviado, esperando respuesta...");
+			},
+			success: function(data){
+				alert(data);
+			},
 			error: function(e){
 				alert("Error de conexión con AJAX");
-				alert(e.response);
+				//alert(e.response);
 			}
 
 		}).done(function(mensaje){
@@ -91,9 +99,12 @@ var scarlett = {
 				encendido:val,
 				control: con
 			},
+			success: function(){
+
+			},
 			error: function(e){
 				alert("Error de conexión con AJAX");
-				alert(e.response);
+				//alert(e.response);
 			}
 
 		}).done(function(mensaje){
