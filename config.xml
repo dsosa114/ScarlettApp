@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "mx.idtmx.ScarlettApp"
+        version     = "1.0.0"
+        versionCode = "1" >
+
+        <!-- versionCode is optional and Android only -->
+
+        <preference name="phonegap-version" value="3.7.0" />
+
+        <name>Scarlett</name>
+
+        <description>
+            Aplicación para controlar Scarlett.
+        </description>
+
+        <author href="#" email="daniel.sc@idtmx.mx">
+            Daniel Sosa
+        </author>
+
+        <icon src="img/icon.png" />
+
+        <gap:plugin name="org.apache.cordova.dialogs" />
+        <gap:plugin name="org.apache.cordova.media-capture" />
+        <gap:plugin name="org.apache.cordova.file-transfer" />
+        <gap:plugin name="org.apache.cordova.vibration" />
+        <gap:plugin name="org.apache.cordova.network-information"/>
+        
+    </widget>
