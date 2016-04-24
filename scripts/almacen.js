@@ -42,7 +42,7 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//Insertar los datos de la nueva reservacion
-		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", "' + almacen.dirDispositivo + '", "' + almacen.tipoDispositivo + '", ' + almacen.numControles + ')');
+		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", "' + almacen.dirDispositivo + '", "' + almacen.tipoDispositivo + '", "' + almacen.numControles + '")');
 	},
 
 	tablaHabitacionMenu: function(tx){
@@ -92,10 +92,10 @@ var almacen = {
 				var controlName = res.rows.item(h).named;
 				var controlAddr = res.rows.item(h).addrd;
 				var controlType = res.rows.item(h).typed;
-				var controlNumb = res.rows.item(h).numc;
+				var controlNumb = parseInt(res.rows.item(h).numc);
 				var modName = controlName.split(' ').join('-');
 
-				alert(controlName + controlAddr + controlType + controlNumb + modName);
+				alert(controlName + controlAddr + controlType + typeof(controlNumb) + modName);
 
 				$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 				for(var i = 1; i <= controlNumb; i++){
