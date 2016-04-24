@@ -14,7 +14,7 @@ var scarlett = {
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
         $("#createControlBtn").tap(scarlett.crearNuevoControlCuarto);
-        $(document).on('pagebeforeshow', '#home', function(){
+        $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
 			$("#roomList a").on("tap", scarlett.llenarPlantillaCuarto);
 		});
@@ -52,6 +52,7 @@ var scarlett = {
 
     llenarPlantillaCuarto: function(room){
     	//alert($(this).attr("room"));
+        $("#deviceList").empty();
         scarlett.nombreHabitacion = room;
         almacen.cargarDatosHabitacion(room);
     	window.location.href = "#roomTemplate";
@@ -110,7 +111,7 @@ var scarlett = {
 		var controlNumb = document.getElementById("newModuleNumb").value;
 		var modName = controlName.split(' ').join('-');
 
-		console.log(controlName + controlAddr + controlType + controlNumb + modName);
+		alert(controlName + controlAddr + controlType + controlNumb + modName);
 
 		$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 		for(var i = 1; i <= controlNumb; i++){
