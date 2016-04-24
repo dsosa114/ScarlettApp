@@ -1,4 +1,6 @@
 var scarlett = {
+    nombreHabitacion: null,
+
 	deviceready: function(){
 		//Esto es necesario para PhoneGap para que pueda ejecutar la aplicación
 		document.addEventListener("deviceready", scarlett.onDeviceReady, false);
@@ -18,17 +20,11 @@ var scarlett = {
 		});
 
 		$(document).on('pagebeforeshow', '#roomTemplate', function(){
-			$(document).off('slidestop', '.slider-int').on('slidestop', '.slider-int', function (e) {
-				var device = $(this).attr("daddr");
-            	var value = document.getElementById($(this).attr("id")).value;
-            	var control = $(this).attr("control");
-
-            	console.log("Dispositivo: " + device + ", Valor: " + value + ", Control: " + control);
-
-            	scarlett.enviarData(device, value, control);
-        	});
+			$(document).off('slidestop', '.slider-int').on('slidestop', '.slider-int', scarlett.slideStop);
+        	$(document).off('change', '.selector').on('change', '.selector', scarlett.flipChange);
 		});
 
+        almacen.cargarMenuHabitacion();
         scarlett.ponerFecha();
     },
 
@@ -45,14 +41,16 @@ var scarlett = {
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
         
         $("#roomList").append(listItem).listview('refresh');
-        alert(listItem);
-        //$("#roomList a").on("tap", scarlett.llenarPlantillaCuarto($(this)));
+
+        almacen.guardarHabitacionMenu(roomName);
 
         window.location.href = "#home";
     },
 
     llenarPlantillaCuarto: function(room){
-    	alert($(this).attr("room"));
+    	//alert($(this).attr("room"));
+        scarlett.nombreHabitacion = room;
+        almacen.cargarDatosHabitacion(room);
     	window.location.href = "#roomTemplate";
     },
 
@@ -60,7 +58,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://192.168.0.41:2000/data",
+			url:"http://192.168.1.70:2000/data",
 			//url:"http://scarlett.local:2000/data",
 			//url:"http://192.168.42.1:2000/data",
 			data:{
@@ -68,13 +66,7 @@ var scarlett = {
 				points:val,
 				control: con
 			},
-			timeout: 500,
-			beforeSend: function(){
-				alert("Sending...");
-			},
-			success: function(data){
-				alert(data);
-			},
+			timeout: 1000,
 			error: function(e){
 				alert("Error de conexión con AJAX");
 				//alert(e.response);
@@ -89,7 +81,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://192.168.0.41:2000/outlet",
+			url:"http://192.168.1.70:2000/outlet",
 			//url:"http://scarlett.local:2000/outlet",
 			//url:"http://192.168.42.1:2000/outlet",
 			data:{
@@ -97,9 +89,7 @@ var scarlett = {
 				encendido:val,
 				control: con
 			},
-			success: function(){
-
-			},
+			timeout: 1000,
 			error: function(e){
 				alert("Error de conexión con AJAX");
 				//alert(e.response);
@@ -121,28 +111,96 @@ var scarlett = {
 
 		$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 		for(var i = 1; i <= controlNumb; i++){
-			modName = modName + "-" + i;
+			newModName = modName + "-" + i;
 			if(controlType == "Luces"){
 				$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
-					<div class="ui-block-a" style="width:15%"><input id="'+ modName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
-					<div class="ui-block-b" style="width:80%"><input id="'+ modName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
+					<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
+					<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 					</form></li>').listview('refresh').trigger("create");
 				console.log("Foco " + i);
 			} else if (controlType == "Contactos"){
-				$("#deviceList").append('<li><input id="'+ modName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
+				$("#deviceList").append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
 				console.log("Contacto " + i);
 			} else if (controlType == "Persiana"){
 				$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
-					<div class="ui-block-a" style="width:15%"><input id="'+ modName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
-					<div class="ui-block-b" style="width:80%"><input id="'+ modName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
+					<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
+					<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 					</form></li>').listview('refresh').trigger("create");
 				console.log("Persiana " + i);
 			}
 		}
 
+        almacen.guardarHabitacion(scarlett.nombreHabitacion, controlName, controlAddr, controlType, controlNumb);
 		window.location.href = "#roomTemplate";
 		//var listItem = "<li><a href='#' id='" + device.address + "'>" + device.name + "</a></li>";
 	},
+
+	flipChange: function(e){
+		var flipId = $(this).attr("id");
+       	var sliderId = flipId.slice(0, flipId.length - 1) + "s";
+
+        var flipswitch = document.getElementById(flipId);
+        var slider = document.getElementById(sliderId);
+
+        var device = $(this).attr("daddr");
+        var value = "ON"
+        var control = $(this).attr("control");
+
+        if (!flipswitch.checked) {
+        	if(control != "O1" && control != "O2"){
+            	slider.value = "0";
+            }
+            value = "OFF"
+            $(".slider-int").slider("refresh");
+        } else {
+        	if(control != "O1" && control != "O2"){
+            	slider.value = "100";
+            }
+            $(".slider-int").slider("refresh");
+        }
+        		
+        //console.log(flipId + ": " + flipswitch.checked + ", " +sliderId + ": " + slider.value);
+        if(control != "O1" && control != "O2"){
+        	console.log(device + ", " + slider.value + ", " + control);
+        	scarlett.enviarData(device, value, control);
+        }
+        else{
+        	console.log(device + ", " + value + ", " + control);
+        	scarlett.enviarOutlet(device, value, control);
+        }
+    },
+
+    slideStop: function(e){
+    	var sliderId = $(this).attr("id");
+       	var flipId = sliderId.slice(0, sliderId.length - 1) + "f";
+
+        var flipswitch = document.getElementById(flipId);
+        var slider = document.getElementById(sliderId);
+
+		var device = $(this).attr("daddr");
+        var value = document.getElementById($(this).attr("id")).value;
+        var control = $(this).attr("control");
+
+        console.log($('#' + flipId ).val() + ": " + flipswitch.checked + ", " +sliderId + ": " + slider.value);
+        if (value >= 1) {
+        	$(document).off('change', '.selector');
+        	$('#' + flipId )
+                .prop('checked', true)
+                .flipswitch('refresh');
+            $(document).on('change', '.selector', scarlett.flipChange);
+        } else {
+        	$(document).off('change', '.selector');
+            $('#' + flipId )
+                //.off("change")
+                .prop('checked', false)
+                .flipswitch('refresh')
+                //.on("change", scarlett.flipChange);
+            $(document).on('change', '.selector', scarlett.flipChange);
+        }
+        console.log("Dispositivo: " + device + ", Valor: " + value + ", Control: " + control);
+
+        scarlett.enviarData(device, value, control);
+    },
 
     ponerFecha: function(){
 		var fecha = new Date();
@@ -157,8 +215,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//
-$(scarlett.deviceready);
+//$(scarlett.deviceready);
 
 //Internet Explorer
-//$(scarlett.onDeviceReady);
+//
+$(scarlett.onDeviceReady);
