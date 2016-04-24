@@ -23,7 +23,7 @@
         <icon src="img/icon.png" />
 
         <gap:plugin name="org.apache.cordova.dialogs" />
-        <gap:plugin name="Storage" value="org.apache.cordova.Storage" />
+        <gap:plugin name="org.apache.cordova.Storage" />
         <gap:plugin name="org.apache.cordova.media-capture" />
         <gap:plugin name="org.apache.cordova.file-transfer" />
         <gap:plugin name="org.apache.cordova.vibration" />
