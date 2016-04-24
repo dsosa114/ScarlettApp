@@ -24,7 +24,7 @@ var almacen = {
 		almacen.nombreHabitacion  	= nh;
 		almacen.nombreDispositivo 	= nd;
 		almacen.dirDispositivo 		= dd;
-		almacen.tipoDispositivo		= nd;
+		almacen.tipoDispositivo		= td;
 		almacen.numControles		= nc;
 
 		almacen.db.transaction(almacen.tablaHabitacion, almacen.error, almacen.exito);
@@ -95,7 +95,7 @@ var almacen = {
 				var controlNumb = parseInt(res.rows.item(h).numc);
 				var modName = controlName.split(' ').join('-');
 
-				alert(controlName + controlAddr + controlType + typeof(controlNumb) + modName);
+				alert(controlName + controlAddr + controlType + controlNumb + modName);
 
 				$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 				for(var i = 1; i <= controlNumb; i++){
