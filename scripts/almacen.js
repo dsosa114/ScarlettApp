@@ -15,7 +15,7 @@ var almacen = {
 	},
 
 	exito: function(){
-		alert("Exito");
+		console.log("Exito");
 
 	},
 
@@ -87,7 +87,7 @@ var almacen = {
 
 		if(cantidad > 0){
 			//si hay reservas en el historial
-			var resultado='';
+			//var resultado='';
 			for(var h = 0; h < cantidad; h++){
 				var controlName = res.rows.item(h).named;
 				var controlAddr = res.rows.item(h).addrd;
@@ -95,7 +95,7 @@ var almacen = {
 				var controlNumb = res.rows.item(h).numc;
 				var modName = controlName.split(' ').join('-');
 
-				console.log(controlName + controlAddr + controlType + controlNumb + modName);
+				alert(controlName + controlAddr + controlType + controlNumb + modName);
 
 				$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 				for(var i = 1; i <= controlNumb; i++){
