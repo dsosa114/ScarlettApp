@@ -44,6 +44,8 @@ var scarlett = {
 
         almacen.guardarHabitacionMenu(roomName);
 
+        $("#newRoomDialog").popup("close");
+
         window.location.href = "#home";
     },
 
@@ -215,8 +217,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//$(scarlett.deviceready);
+//
+$(scarlett.deviceready);
 
 //Internet Explorer
-//
-$(scarlett.onDeviceReady);
+//$(scarlett.onDeviceReady);

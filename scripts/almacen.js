@@ -11,7 +11,7 @@ var almacen = {
 	},
 
 	error: function(error){
-		alert("Error: " + error.message);
+		alert("Error " + error.code + ": " + error.message);
 	},
 
 	exito: function(){

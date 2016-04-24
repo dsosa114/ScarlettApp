@@ -15,7 +15,7 @@
                 <img class="foto-logo" src="img/ScarlettH.png"/>
             </div>
             <a href="#" class="fecha"></a>
-            <a href="#newRoomDialog" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="dialog">Agregar cuarto</a>
+            <a href="#newRoomDialog" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar cuarto</a>
         </div>
         <div class="ui-content">
             <ul id="roomList" data-role="listview">
@@ -28,27 +28,28 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div id="newRoomDialog" data-role="page">
-        <div data-role="header">
-            <h1>Nuevo Cuarto</h1>
-        </div>
-        <div class="ui-content">
-            <ul data-role="listview">
-                <li data-role="list-divider">
-                    Nombre del cuarto:
-                </li>
-                <li>
-                    <input id="newRoomName" type="text" placeholder="Escribe un nombre">
-                </li>
-            </ul>
-        </div>
-        <div data-role="footer" data-position="fixed" class="ui-bar">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#" data-rel="back">Cancelar</a></li>
-                    <li><a href="#" id="createNRBtn" class="ui-btn-active">Crear</a></li>
+        <div id="newRoomDialog" data-role="popup">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-role="header">
+                <h1>Nuevo Cuarto</h1>
+            </div>
+            <div class="ui-content">
+                <ul data-role="listview">
+                    <li data-role="list-divider">
+                        Nombre del cuarto:
+                    </li>
+                    <li>
+                        <input id="newRoomName" type="text" placeholder="Escribe un nombre">
+                    </li>
                 </ul>
+            </div>
+            <div data-role="footer" class="ui-bar">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-rel="back">Cancelar</a></li>
+                        <li><a href="#" id="createNRBtn" class="ui-btn-active">Crear</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
