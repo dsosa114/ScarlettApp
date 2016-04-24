@@ -71,7 +71,6 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//leer tabla historial
-		alert('SELECT * FROM ' + almacen.nombreHabitacion);
 		tx.executeSql('SELECT * FROM ' + almacen.nombreHabitacion, [], almacen.reconstruirHabitacion);
 	},
 
@@ -79,7 +78,6 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//leer tabla historial
-		alert('SELECT * FROM menu');
 		tx.executeSql('SELECT * FROM menu', [], almacen.recuperarMenu);
 	},
 

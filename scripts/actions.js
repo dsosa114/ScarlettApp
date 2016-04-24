@@ -14,8 +14,10 @@ var scarlett = {
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
         $("#createControlBtn").tap(scarlett.crearNuevoControlCuarto);
+        $("#addModuleBtn").tap(scarlett.enviarAddModule);
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
+            almacen.cargarMenuHabitacion();
 			$("#roomList a").on("tap", scarlett.llenarPlantillaCuarto);
 		});
 
@@ -24,10 +26,8 @@ var scarlett = {
         	$(document).off('change', '.selector').on('change', '.selector', scarlett.flipChange);
 		});
 
-        almacen.cargarMenuHabitacion();
         scarlett.ponerFecha();
     },
-
     onPause: function() {
         // TODO: This application has been suspended. Save application state here.
     },
@@ -105,6 +105,42 @@ var scarlett = {
 		});
 	},
 
+    enviarAddModule: function(){
+        $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
+        $.ajax({
+            method: "GET",
+            url:"http://192.168.1.70:2000/addModule",
+            //url:"http://scarlett.local:2000/outlet",
+            //url:"http://192.168.42.1:2000/outlet",
+            timeout: 60000,
+            error: function(e){
+                $.mobile.loading( 'hide');
+                navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
+                    window.location.href = "#newModuleDialog";
+                }, "Error", "Ok");
+                //alert(e.response);
+            }
+
+        }).done(function(mensaje){
+            $.mobile.loading( 'hide');
+            if(mensaje == "No module detected. Check your conection"){
+                navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
+                    window.location.href = "#newModuleDialog";
+                }, "Error", "Ok");
+            } else{
+                alert(mensaje);
+                var splitMsg = mensaje.split(':');
+                var controlAddr = document.getElementById("newModuleAddr");
+                var controlType = document.getElementById("newModuleType");
+                var controlNumb = document.getElementById("newModuleNumb");
+
+                controlAddr.value = splitMsg[0];
+
+                window.location.href = "#newModuleDialog";
+            }
+        });
+    },
+
 	crearNuevoControlCuarto: function(){
 		var controlName = document.getElementById("newModuleName").value;
 		var controlAddr = document.getElementById("newModuleAddr").value;
@@ -112,7 +148,7 @@ var scarlett = {
 		var controlNumb = document.getElementById("newModuleNumb").value;
 		var modName = controlName.split(' ').join('-');
 
-		alert(controlName + controlAddr + controlType + controlNumb + modName);
+		//alert(controlName + controlAddr + controlType + controlNumb + modName);
 
 		$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 		for(var i = 1; i <= controlNumb; i++){
