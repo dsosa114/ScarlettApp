@@ -42,16 +42,16 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//Insertar los datos de la nueva reservacion
-		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + alamacen.nombreDispositivo + '", ' + alamacen.dirDispositivo + ', ' + alamacen.tipoDispositivo + ', ' + numControles + ')');
+		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", ' + almacen.dirDispositivo + ', ' + almacen.tipoDispositivo + ', ' + almacen.numControles + ')');
 	},
 
 	tablaHabitacionMenu: function(tx){
 		//Crear tabla de historial
+		//alert("Agregando a menu: " + alamacen.nombreHabitacion);
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
-		alert("Agregando a menu: " + alamacen.nombreHabitacion);
 		//alert('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
-		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
+		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + almacen.nombreHabitacion + '"');
 		//alert("ya hay cuartos menu");
 	},
 
@@ -124,7 +124,7 @@ var almacen = {
 	},
 
 	recuperarMenu: function(tx, res){
-		alert("recuperando menu");
+		
 		var cantidad = res.rows.length;
 		//var resultado = '<tr><td colspan="4">No hay reservas en el historial</td></tr>';
 
