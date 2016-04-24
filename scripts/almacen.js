@@ -71,6 +71,7 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//leer tabla historial
+		alert('SELECT * FROM ' + almacen.nombreHabitacion);
 		tx.executeSql('SELECT * FROM ' + almacen.nombreHabitacion, [], almacen.reconstruirHabitacion);
 	},
 
@@ -78,6 +79,7 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//leer tabla historial
+		alert('SELECT * FROM menu');
 		tx.executeSql('SELECT * FROM menu', [], almacen.recuperarMenu);
 	},
 
@@ -95,7 +97,7 @@ var almacen = {
 				var controlNumb = parseInt(res.rows.item(h).numc);
 				var modName = controlName.split(' ').join('-');
 
-				alert(controlName + controlAddr + controlType + controlNumb + modName);
+				//alert(controlName + controlAddr + controlType + controlNumb + modName);
 
 				$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
 				for(var i = 1; i <= controlNumb; i++){
