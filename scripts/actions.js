@@ -17,7 +17,6 @@ var scarlett = {
         $("#addModuleBtn").tap(scarlett.enviarAddModule);
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
-            almacen.cargarMenuHabitacion();
 			$("#roomList a").on("tap", scarlett.llenarPlantillaCuarto);
 		});
 
@@ -26,6 +25,7 @@ var scarlett = {
         	$(document).off('change', '.selector').on('change', '.selector', scarlett.flipChange);
 		});
 
+        almacen.cargarMenuHabitacion();
         scarlett.ponerFecha();
     },
     onPause: function() {
@@ -135,6 +135,17 @@ var scarlett = {
                 var controlNumb = document.getElementById("newModuleNumb");
 
                 controlAddr.value = splitMsg[0];
+
+                if(splitMsg[1].includes('L')){
+                    controlType.value = "Luces";
+                    controlNumb.value = parseInt(splitMsg[1]);
+                } else if (splitMsg[1].includes('B')){
+                    controlType.value = "Persiana";
+                    controlNumb.value = 1;
+                } else if (splitMsg[1].includes('O')){
+                    controlType.value = "Contactos";
+                    controlNumb.value = parseInt(splitMsg[1]);
+                }
 
                 window.location.href = "#newModuleDialog";
             }
