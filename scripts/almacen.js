@@ -7,7 +7,7 @@ var almacen = {
 	numControles: null,
 
 	conectarDB: function(){
-		return window.openDatabase("ScarlettApp", "1.0", "Scarlett App", 200000);
+		return window.openDatabase("ScarlettApp", "1.0", "Scarlett App", 1000000);
 	},
 
 	error: function(error){
@@ -49,6 +49,7 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
+		alert("agregando cuartos a menu");
 		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
 	},
 
@@ -121,6 +122,7 @@ var almacen = {
 	},
 
 	recuperarMenu: function(tx, res){
+		alert("recuperando menu");
 		var cantidad = res.rows.length;
 		//var resultado = '<tr><td colspan="4">No hay reservas en el historial</td></tr>';
 
