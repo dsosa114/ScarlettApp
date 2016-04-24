@@ -49,8 +49,8 @@ var almacen = {
 		//Crear tabla de historial
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
-		alert("agregando cuartos a menu");
 		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
+		alert("ya hay cuartos menu");
 	},
 
 	cargarDatosHabitacion: function(room){
