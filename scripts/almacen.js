@@ -40,9 +40,9 @@ var almacen = {
 
 	tablaHabitacion: function(tx){
 		//Crear tabla de historial
-		tx.executeSql('CREATE TABLE IF NOT EXISTS "' + almacen.nombreHabitacion + '" (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//Insertar los datos de la nueva reservacion
-		tx.executeSql('INSERT INTO "' + almacen.nombreHabitacion + '" (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", "' + almacen.dirDispositivo + '", "' + almacen.tipoDispositivo + '", "' + almacen.numControles + '")');
+		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", "' + almacen.dirDispositivo + '", "' + almacen.tipoDispositivo + '", "' + almacen.numControles + '")');
 	},
 
 	tablaHabitacionMenu: function(tx){
@@ -69,10 +69,10 @@ var almacen = {
 
 	leerHabitacion: function(tx){
 		//Crear tabla de historial
-		tx.executeSql('CREATE TABLE IF NOT EXISTS "' + almacen.nombreHabitacion + '" (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//leer tabla historial
-		alert('SELECT * FROM "' + almacen.nombreHabitacion + '"');
-		tx.executeSql('SELECT * FROM "' + almacen.nombreHabitacion + '"', [], almacen.reconstruirHabitacion);
+		alert('SELECT * FROM ' + almacen.nombreHabitacion);
+		tx.executeSql('SELECT * FROM ' + almacen.nombreHabitacion, [], almacen.reconstruirHabitacion);
 	},
 
 	leerMenuHabitacion: function(tx){

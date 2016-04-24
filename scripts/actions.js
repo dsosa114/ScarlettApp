@@ -50,8 +50,9 @@ var scarlett = {
         window.location.href = "#home";
     },
 
-    llenarPlantillaCuarto: function(room){
+    llenarPlantillaCuarto: function(e){
     	//alert($(this).attr("room"));
+        var room = $(this).attr("room");
         $("#deviceList").empty();
         scarlett.nombreHabitacion = room;
         almacen.cargarDatosHabitacion(room);
