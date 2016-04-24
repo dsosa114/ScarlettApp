@@ -50,7 +50,7 @@ var almacen = {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
 		alert("Agregando a menu: " + alamacen.nombreHabitacion);
-		alert('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
+		//alert('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
 		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
 		alert("ya hay cuartos menu");
 	},
