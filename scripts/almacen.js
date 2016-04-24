@@ -52,7 +52,7 @@ var almacen = {
 		alert("Agregando a menu: " + alamacen.nombreHabitacion);
 		//alert('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
 		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + alamacen.nombreHabitacion + '"');
-		alert("ya hay cuartos menu");
+		//alert("ya hay cuartos menu");
 	},
 
 	cargarDatosHabitacion: function(room){
