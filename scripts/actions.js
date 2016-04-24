@@ -39,10 +39,11 @@ var scarlett = {
     agregarNuevoCuarto: function(){
     	var roomName = document.getElementById("newRoomName").value;
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
-        
-        $("#roomList").append(listItem).listview('refresh');
 
         almacen.guardarHabitacionMenu(roomName);
+        
+        $("#roomList").append(listItem).listview('refresh');
+        $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
 
         $("#newRoomDialog").popup("close");
 
