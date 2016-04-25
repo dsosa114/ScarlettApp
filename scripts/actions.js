@@ -116,6 +116,9 @@ var scarlett = {
             error: function(e){
                 $.mobile.loading( 'hide');
                 navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
+                    $("#newModuleAddr").textinput('enable');
+                    $("#newModuleType").selectmenu('enable');
+                    $("#newModuleNumb").selectmenu('enable');
                     window.location.href = "#newModuleDialog";
                 }, "Error", "Ok");
                 //alert(e.response);
@@ -125,8 +128,12 @@ var scarlett = {
             $.mobile.loading( 'hide');
             if(mensaje == "No module detected. Check your conection"){
                 navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
+                    $("#newModuleAddr").textinput('enable');
+                    $("#newModuleType").selectmenu('enable');
+                    $("#newModuleNumb").selectmenu('enable');
                     window.location.href = "#newModuleDialog";
                 }, "Error", "Ok");
+                
             } else{
                 alert(mensaje);
                 var splitMsg = mensaje.split(':');
@@ -135,6 +142,7 @@ var scarlett = {
                 var controlNumb = document.getElementById("newModuleNumb");
 
                 controlAddr.value = splitMsg[0];
+                $("#newModuleAddr").textinput('disable');
 
                 if(splitMsg[1].includes('L')){
                     controlType.value = "Luces";
@@ -146,6 +154,9 @@ var scarlett = {
                     controlType.value = "Contactos";
                     controlNumb.value = parseInt(splitMsg[1]);
                 }
+
+                $("#newModuleType").selectmenu('disable');
+                $("#newModuleNumb").selectmenu('disable');
 
                 window.location.href = "#newModuleDialog";
             }
