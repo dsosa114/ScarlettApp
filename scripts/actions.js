@@ -26,6 +26,11 @@ var scarlett = {
 		$(document).on('pagebeforeshow', '#roomTemplate', function(){
 			$(document).off('slidestop', '.slider-int').on('slidestop', '.slider-int', scarlett.slideStop);
         	$(document).off('change', '.selector').on('change', '.selector', scarlett.flipChange);
+            $( "#newModuleDialog" ).popup({
+                afteropen: function( event, ui ) {
+                    $('#newModuleName').focus();
+                }
+            });
 		});
 
         try{
