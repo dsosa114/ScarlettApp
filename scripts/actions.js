@@ -179,17 +179,22 @@ var scarlett = {
                 controlAddr.value = splitMsg[0];
                 $("#newModuleAddr").textinput('disable').textinput('refresh');
 
-                if(splitMsg[1].includes('L')){
+                if(splitMsg[1].indexOf('L') !== -1){
                     controlType.value = "Luces";
-                    alert(parseInt(splitMsg[1]));
-                    controlNumb.value = parseInt(splitMsg[1]);
+                    alert("indexOf works");
+                    controlNumb.value = parseInt(splitMsg[1].charAt(0));
                 } else if (splitMsg[1].includes('B')){
                     controlType.value = "Persiana";
                     controlNumb.value = 1;
                 } else if (splitMsg[1].includes('O')){
                     controlType.value = "Contactos";
-                    controlNumb.value = parseInt(splitMsg[1]);
+                    controlNumb.value = parseInt(splitMsg[1].charAt(0));
+                } else if(splitMsg[1].includes('L')){
+                    controlType.value = "Luces";
+                    alert("includes works also");
+                    controlNumb.value = parseInt(splitMsg[1].charAt(0));
                 }
+
                 alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
                 try{
                     $("#newModuleType").selectmenu('disable').selectmenu('refresh');
