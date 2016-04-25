@@ -4,18 +4,11 @@
 }
 
 .ui-popup-container, .ui-popup {
+    height: auto;
+    width: 95%;
     position: absolute;
-    /* center the element */
     top: 30px !important;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    /* give it dimensions */
-    min-height: 10em;
-    width: 45%;
-    /*top: 30px !important;
-    left:0;*/
+    left:0;
 }
 
 .ui-popup-screen.in{

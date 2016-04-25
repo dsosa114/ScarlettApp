@@ -128,7 +128,7 @@ var scarlett = {
     enviarAddModule: function(){
         $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
         $.ajax({
-            method: "POST",
+            method: "GET",
             url:"http://192.168.0.41:2000/addModule",
             //url:"http://localhost:2000/addModule",
             //url:"http://scarlett.local:2000/outlet",
