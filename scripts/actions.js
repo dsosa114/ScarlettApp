@@ -135,14 +135,13 @@ var scarlett = {
                 }, "Error", "Ok");
                 
             } else{
-                alert(mensaje);
+                //alert(mensaje);
                 var splitMsg = mensaje.split(':');
                 var controlAddr = document.getElementById("newModuleAddr");
                 var controlType = document.getElementById("newModuleType");
                 var controlNumb = document.getElementById("newModuleNumb");
 
                 controlAddr.value = splitMsg[0];
-                $("#newModuleAddr").textinput('disable');
 
                 if(splitMsg[1].includes('L')){
                     controlType.value = "Luces";
@@ -154,10 +153,13 @@ var scarlett = {
                     controlType.value = "Contactos";
                     controlNumb.value = parseInt(splitMsg[1]);
                 }
-
-                $("#newModuleType").selectmenu('disable');
-                $("#newModuleNumb").selectmenu('disable');
-
+                try{
+                    $("#newModuleAddr").textinput('disable');
+                    $("#newModuleType").selectmenu('disable');
+                    $("#newModuleNumb").selectmenu('disable');
+                } catch(error){
+                    alert(error);
+                }
                 window.location.href = "#newModuleDialog";
             }
         });
