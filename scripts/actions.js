@@ -132,6 +132,10 @@ var scarlett = {
 
     enviarAddModule: function(){
         $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
+        $("#newModuleName").val("").textinput("refresh");
+        $("#newModuleAddr").val("").textinput("refresh");
+        $("#newModuleNumb").prop("selectedIndex", 0).selectmenu("refresh",true);
+        $("#newModuleType").prop("selectedIndex", 0).selectmenu("refresh",true);
         $.ajax({
             method: "GET",
             url:"http://192.168.0.41:2000/addModule",
@@ -328,8 +332,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//
-$(scarlett.deviceready);
+//$(scarlett.deviceready);
 //console.log("Pruebas locales. Error: " + error);
 //Internet Explorer
-//$(scarlett.onDeviceReady);
+//
+$(scarlett.onDeviceReady);
