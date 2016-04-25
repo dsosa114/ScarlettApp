@@ -59,7 +59,7 @@
             <div align="center">
                 <img class="foto-logo" src="img/ScarlettH.png"/>
             </div>
-            <a id="addModuleBtn" href="#" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="dialog">Agregar módulos</a>
+            <a id="addModuleBtn" href="#" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar módulos</a>
         </div>
         <div class="ui-content">
             <img class="foto-cuarto" src="img/galeria/1.jpg"/>
@@ -69,53 +69,54 @@
         </div>
         <div data-role="footer" data-position="fixed" class="ui-bar">
         </div>
-    </div>
-    <div id="newModuleDialog" data-role="page">
-        <div data-role="header">
-            <h1>Agregar Módulo</h1>
-        </div>
-        <div class="ui-content">
-            <ul data-role="listview">
-                <li data-role="list-divider">
-                    Nombre del control:
-                </li>
-                <li>
-                    <input id="newModuleName" type="text" placeholder="Nombre">
-                </li>
-                <li data-role="list-divider">
-                    Dirección del módulo:
-                </li>
-                <li>
-                    <input id="newModuleAddr" type="text" placeholder="Dirección">
-                </li>
-                <li data-role="list-divider">
-                    Tipo de control:
-                </li>
-                <li>
-                    <select id="newModuleType">
-                        <option>Luces</option>
-                        <option>Contactos</options>
-                        <option>Persiana</option>
-                    </select>
-                </li>
-                <li data-role="list-divider">
-                    Número de controles:
-                </li>
-                <li>
-                    <select id="newModuleNumb">
-                        <option>1</option>
-                        <option>2</options>
-                        <option>3</option>
-                    </select>
-                </li>
-            </ul>
-        </div>
-        <div data-role="footer" data-position="fixed" class="ui-bar">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#" data-rel="back">Cancelar</a></li>
-                    <li><a href="#" id="createControlBtn" class="ui-btn-active">Agregar</a></li>
+        <div id="newModuleDialog" data-role="popup">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-role="header">
+                <h1>Agregar Módulo</h1>
+            </div>
+            <div class="ui-content">
+                <ul data-role="listview">
+                    <li data-role="list-divider">
+                        Nombre del control:
+                    </li>
+                    <li>
+                        <input id="newModuleName" type="text" placeholder="Nombre">
+                    </li>
+                    <li data-role="list-divider">
+                        Dirección del módulo:
+                    </li>
+                    <li>
+                        <input id="newModuleAddr" type="text" placeholder="Dirección">
+                    </li>
+                    <li data-role="list-divider">
+                        Tipo de control:
+                    </li>
+                    <li>
+                        <select id="newModuleType">
+                            <option>Luces</option>
+                            <option>Contactos</options>
+                            <option>Persiana</option>
+                        </select>
+                    </li>
+                    <li data-role="list-divider">
+                        Número de controles:
+                    </li>
+                    <li>
+                        <select id="newModuleNumb">
+                            <option>1</option>
+                            <option>2</options>
+                            <option>3</option>
+                        </select>
+                    </li>
                 </ul>
+            </div>
+            <div data-role="footer" class="ui-bar">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-rel="back">Cancelar</a></li>
+                        <li><a href="#" id="createControlBtn" class="ui-btn-active">Agregar</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -8,9 +8,12 @@ var scarlett = {
 
 	onDeviceReady: function() {
         // Handle the Cordova pause and resume events
-        document.addEventListener( 'pause', scarlett.onPause, false );
-        document.addEventListener( 'resume', scarlett.onResume, false );
-        
+        try{
+            document.addEventListener( 'pause', scarlett.onPause, false );
+            document.addEventListener( 'resume', scarlett.onResume, false );
+        } catch (error){
+            console.log("Pruebas locales. Error: " + error);
+        }
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
         $("#createControlBtn").tap(scarlett.crearNuevoControlCuarto);
@@ -25,7 +28,12 @@ var scarlett = {
         	$(document).off('change', '.selector').on('change', '.selector', scarlett.flipChange);
 		});
 
-        almacen.cargarMenuHabitacion();
+        try{
+            almacen.cargarMenuHabitacion();
+        }catch(error){
+            console.log("No hay base de datos disponible por el momento. Error: " + error);
+        }
+        
         scarlett.ponerFecha();
     },
     onPause: function() {
@@ -39,9 +47,13 @@ var scarlett = {
     agregarNuevoCuarto: function(){
     	var roomName = document.getElementById("newRoomName").value;
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
-
-        almacen.guardarHabitacionMenu(roomName);
         
+        try{
+            almacen.guardarHabitacionMenu(roomName);
+        }catch(error){
+            console.log("No hay base de datos disponible por el momento. Error: " + error);
+        }
+
         $("#roomList").append(listItem).listview('refresh');
         $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
 
@@ -55,7 +67,13 @@ var scarlett = {
         var room = $(this).attr("room");
         $("#deviceList").empty();
         scarlett.nombreHabitacion = room;
-        almacen.cargarDatosHabitacion(room);
+
+        try{
+            almacen.cargarDatosHabitacion(room);
+        }catch(error){
+            console.log("No hay base de datos disponible por el momento. Error: " + error);
+        }
+        
     	window.location.href = "#roomTemplate";
     },
 
@@ -64,6 +82,7 @@ var scarlett = {
 		$.ajax({
 			method: "POST",
 			url:"http://192.168.0.41:2000/data",
+            //url:"localhost:2000/data",
 			//url:"http://scarlett.local:2000/data",
 			//url:"http://192.168.42.1:2000/data",
 			data:{
@@ -87,6 +106,7 @@ var scarlett = {
 		$.ajax({
 			method: "POST",
 			url:"http://192.168.0.41:2000/outlet",
+            //url:"localhost:2000/outlet",
 			//url:"http://scarlett.local:2000/outlet",
 			//url:"http://192.168.42.1:2000/outlet",
 			data:{
@@ -108,31 +128,46 @@ var scarlett = {
     enviarAddModule: function(){
         $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
         $.ajax({
-            method: "GET",
+            method: "POST",
             url:"http://192.168.0.41:2000/addModule",
+            //url:"http://localhost:2000/addModule",
             //url:"http://scarlett.local:2000/outlet",
             //url:"http://192.168.42.1:2000/outlet",
             timeout: 60000,
             error: function(e){
                 $.mobile.loading( 'hide');
-                navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
-                    $("#newModuleAddr").textinput('enable');
-                    $("#newModuleType").selectmenu('enable');
-                    $("#newModuleNumb").selectmenu('enable');
-                    window.location.href = "#newModuleDialog";
-                }, "Error", "Ok");
+                try{
+                    navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
+                        $("#newModuleAddr").textinput('enable');
+                        $("#newModuleType").selectmenu('enable');
+                        $("#newModuleNumb").selectmenu('enable');
+                        $("#newModuleDialog").popup("open");
+                        //window.location.href = "#newModuleDialog";
+                    }, "Error", "Ok");
+                } catch (error){
+                    console.log("Prueba local. Error: " + error);
+                    alert("Error de conexión, no se pudo agregar módulo automáticamente.");
+                    $("#newModuleDialog").popup("open");
+                }
                 //alert(e.response);
             }
 
         }).done(function(mensaje){
             $.mobile.loading( 'hide');
             if(mensaje == "No module detected. Check your conection"){
-                navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
-                    $("#newModuleAddr").textinput('enable');
-                    $("#newModuleType").selectmenu('enable');
-                    $("#newModuleNumb").selectmenu('enable');
-                    window.location.href = "#newModuleDialog";
-                }, "Error", "Ok");
+                try{
+                    navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
+                        $("#newModuleAddr").textinput('enable');
+                        $("#newModuleType").selectmenu('enable');
+                        $("#newModuleNumb").selectmenu('enable');
+                        $("#newModuleDialog").popup("open");
+                        //window.location.href = "#newModuleDialog";
+                    }, "Error", "Ok");
+                } catch (error){
+                    console.log("Prueba local. Error: " + error);
+                    alert("No hay módulos conectados, activando modo manual.");
+                    $("#newModuleDialog").popup("open");
+                }
                 
             } else{
                 //alert(mensaje);
@@ -158,9 +193,10 @@ var scarlett = {
                     $("#newModuleType").selectmenu('disable');
                     $("#newModuleNumb").selectmenu('disable');
                 } catch(error){
-                    alert(error);
+                    alert("Error: " + error);
                 }
-                window.location.href = "#newModuleDialog";
+
+                $("#newModuleDialog").popup("open");
             }
         });
     },
@@ -195,7 +231,13 @@ var scarlett = {
 			}
 		}
 
-        almacen.guardarHabitacion(scarlett.nombreHabitacion, controlName, controlAddr, controlType, controlNumb);
+        try{
+            almacen.guardarHabitacion(scarlett.nombreHabitacion, controlName, controlAddr, controlType, controlNumb);
+        }catch(error){
+            console.log("No hay base de datos disponible por el momento. Error: " + error);
+        }
+        
+        $("#newModuleDialog").popup("close");
 		window.location.href = "#roomTemplate";
 		//var listItem = "<li><a href='#' id='" + device.address + "'>" + device.name + "</a></li>";
 	},
@@ -282,6 +324,6 @@ var scarlett = {
 //PhoneGap
 //
 $(scarlett.deviceready);
-
+//console.log("Pruebas locales. Error: " + error);
 //Internet Explorer
 //$(scarlett.onDeviceReady);
