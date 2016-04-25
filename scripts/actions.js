@@ -177,7 +177,9 @@ var scarlett = {
                 var controlNumb = document.getElementById("newModuleNumb");
 
                 controlAddr.value = splitMsg[0];
-
+                $("#newModuleAddr").textinput('disable').textinput('refresh');
+                alert(splitMsg);
+                
                 if(splitMsg[1].includes('L')){
                     controlType.value = "Luces";
                     controlNumb.value = parseInt(splitMsg[1]);
@@ -188,11 +190,10 @@ var scarlett = {
                     controlType.value = "Contactos";
                     controlNumb.value = parseInt(splitMsg[1]);
                 }
+                alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
                 try{
-                    $("#newModuleAddr").textinput('disable').textinput('refresh');
                     $("#newModuleType").selectmenu('disable').selectmenu('refresh');
                     $("#newModuleNumb").selectmenu('disable').selectmenu('refresh');
-                    alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
                 } catch(error){
                     alert("Error: " + error);
                 }
