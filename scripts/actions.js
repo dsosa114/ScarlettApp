@@ -184,7 +184,7 @@ var scarlett = {
                 } else if (splitMsg[1].indexOf('B') !== -1){
                     controlType.value = "Persiana";
                     controlNumb.value = 1;
-                } else if (splitMsg[1].indexOf('O') !== -1)){
+                } else if (splitMsg[1].indexOf('O') !== -1){
                     controlType.value = "Contactos";
                     controlNumb.value = parseInt(splitMsg[1].charAt(0));
                 } 
