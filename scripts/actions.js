@@ -138,9 +138,9 @@ var scarlett = {
                 $.mobile.loading( 'hide');
                 try{
                     navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
-                        $("#newModuleAddr").textinput('enable');
-                        $("#newModuleType").selectmenu('enable');
-                        $("#newModuleNumb").selectmenu('enable');
+                        $("#newModuleAddr").textinput('enable').textinput('refresh');
+                        $("#newModuleType").selectmenu('enable').selectmenu('refresh');
+                        $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
                         $("#newModuleDialog").popup("open");
                         //window.location.href = "#newModuleDialog";
                     }, "Error", "Ok");
@@ -157,9 +157,9 @@ var scarlett = {
             if(mensaje == "No module detected. Check your conection"){
                 try{
                     navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
-                        $("#newModuleAddr").textinput('enable');
-                        $("#newModuleType").selectmenu('enable');
-                        $("#newModuleNumb").selectmenu('enable');
+                        $("#newModuleAddr").textinput('enable').textinput('refresh');
+                        $("#newModuleType").selectmenu('enable').selectmenu('refresh');
+                        $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
                         $("#newModuleDialog").popup("open");
                         //window.location.href = "#newModuleDialog";
                     }, "Error", "Ok");
@@ -189,15 +189,15 @@ var scarlett = {
                     controlNumb.value = parseInt(splitMsg[1]);
                 }
                 try{
-                    $("#newModuleAddr").textinput('disable');
-                    $("#newModuleType").selectmenu('disable');
-                    $("#newModuleNumb").selectmenu('disable');
+                    $("#newModuleAddr").textinput('disable').textinput('refresh');
+                    $("#newModuleType").selectmenu('disable').selectmenu('refresh');
+                    $("#newModuleNumb").selectmenu('disable').selectmenu('refresh');
+                    alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
                 } catch(error){
                     alert("Error: " + error);
                 }
 
-                //$("#newModuleDialog").popup("open");
-                alert(mensaje);
+                $("#newModuleDialog").popup("open");
             }
         });
     },
