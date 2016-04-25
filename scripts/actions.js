@@ -178,10 +178,10 @@ var scarlett = {
 
                 controlAddr.value = splitMsg[0];
                 $("#newModuleAddr").textinput('disable').textinput('refresh');
-                alert(splitMsg);
-                
+
                 if(splitMsg[1].includes('L')){
                     controlType.value = "Luces";
+                    alert(parseInt(splitMsg[1]));
                     controlNumb.value = parseInt(splitMsg[1]);
                 } else if (splitMsg[1].includes('B')){
                     controlType.value = "Persiana";
