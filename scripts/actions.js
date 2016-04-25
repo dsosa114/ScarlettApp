@@ -177,26 +177,20 @@ var scarlett = {
                 var controlNumb = document.getElementById("newModuleNumb");
 
                 controlAddr.value = splitMsg[0];
-                $("#newModuleAddr").textinput('disable').textinput('refresh');
 
                 if(splitMsg[1].indexOf('L') !== -1){
                     controlType.value = "Luces";
-                    alert("indexOf works");
                     controlNumb.value = parseInt(splitMsg[1].charAt(0));
-                } else if (splitMsg[1].includes('B')){
+                } else if (splitMsg[1].indexOf('B') !== -1){
                     controlType.value = "Persiana";
                     controlNumb.value = 1;
-                } else if (splitMsg[1].includes('O')){
+                } else if (splitMsg[1].indexOf('O') !== -1)){
                     controlType.value = "Contactos";
                     controlNumb.value = parseInt(splitMsg[1].charAt(0));
-                } else if(splitMsg[1].includes('L')){
-                    controlType.value = "Luces";
-                    alert("includes works also");
-                    controlNumb.value = parseInt(splitMsg[1].charAt(0));
-                }
-
-                alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
+                } 
+                //alert("Mensaje: " + mensaje + "Html: " + controlAddr.value + ", " + controlType.value + ", " + controlNumb.value);
                 try{
+                    $("#newModuleAddr").textinput('disable').textinput('refresh');
                     $("#newModuleType").selectmenu('disable').selectmenu('refresh');
                     $("#newModuleNumb").selectmenu('disable').selectmenu('refresh');
                 } catch(error){
