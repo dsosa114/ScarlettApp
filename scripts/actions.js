@@ -63,7 +63,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://192.168.1.70:2000/data",
+			url:"http://192.168.0.41:2000/data",
 			//url:"http://scarlett.local:2000/data",
 			//url:"http://192.168.42.1:2000/data",
 			data:{
@@ -86,7 +86,7 @@ var scarlett = {
 		//alert(nom+" "+email+" "+tel)
 		$.ajax({
 			method: "POST",
-			url:"http://192.168.1.70:2000/outlet",
+			url:"http://192.168.0.41:2000/outlet",
 			//url:"http://scarlett.local:2000/outlet",
 			//url:"http://192.168.42.1:2000/outlet",
 			data:{
@@ -109,7 +109,7 @@ var scarlett = {
         $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
         $.ajax({
             method: "GET",
-            url:"http://192.168.1.70:2000/addModule",
+            url:"http://192.168.0.41:2000/addModule",
             //url:"http://scarlett.local:2000/outlet",
             //url:"http://192.168.42.1:2000/outlet",
             timeout: 60000,
