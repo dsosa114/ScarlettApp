@@ -196,7 +196,7 @@ var scarlett = {
                     alert("Error: " + error);
                 }
 
-                $("#newModuleDialog").popup("open");
+                //$("#newModuleDialog").popup("open");
                 alert(mensaje);
             }
         });
@@ -270,7 +270,7 @@ var scarlett = {
         //console.log(flipId + ": " + flipswitch.checked + ", " +sliderId + ": " + slider.value);
         if(control != "O1" && control != "O2"){
         	console.log(device + ", " + slider.value + ", " + control);
-        	scarlett.enviarData(device, value, control);
+        	scarlett.enviarData(device, slider.value, control);
         }
         else{
         	console.log(device + ", " + value + ", " + control);
