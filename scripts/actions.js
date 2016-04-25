@@ -197,6 +197,7 @@ var scarlett = {
                 }
 
                 $("#newModuleDialog").popup("open");
+                alert(mensaje);
             }
         });
     },
