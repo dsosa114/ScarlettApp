@@ -50,21 +50,13 @@ var scarlett = {
     },
 
     agregarNuevoCuarto: function(){
-        var noExiste = true; 
     	var roomName = document.getElementById("newRoomName").value;
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
         
         try{
-            noExiste = almacen.comprobarExistenciaMenu(roomName);
-            alert(noExiste);
-            if(noExiste){
-                almacen.guardarHabitacionMenu(roomName);
-            }
+            almacen.comprobarExistenciaMenu(roomName);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
-        }
-
-        if(true){
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
         }
