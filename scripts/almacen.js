@@ -31,9 +31,9 @@ var almacen = {
 		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
-		//alert('INSERT INTO menu (nameroom) VALUES (' + alamacen.nombreHabitacion );
+		alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		tx.executeSql('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"', [], almacen.comprobarDisponibilidad);
-		//alert("ya hay cuartos menu");
+		alert("comprobado");
 	},
 
 	guardarHabitacion: function(nh, nd, dd, td, nc){
@@ -113,6 +113,7 @@ var almacen = {
                 return false;
             }
 		} else{
+			alert("No hay problema.");
 			return true;
 		}
 	},

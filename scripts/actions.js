@@ -56,6 +56,7 @@ var scarlett = {
         
         try{
             noExiste = almacen.comprobarExistenciaMenu(roomName);
+            alert(noExiste);
             if(noExiste){
                 almacen.guardarHabitacionMenu(roomName);
             }
@@ -63,7 +64,7 @@ var scarlett = {
             console.log("No hay base de datos disponible por el momento. Error: " + error);
         }
 
-        if(noExiste){
+        if(true){
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
         }
