@@ -48,11 +48,9 @@ var almacen = {
 
 	},
 
-	guardarHabitacionMenu: function(){
+	guardarHabitacionMenu: function(nh){
 		almacen.db   				= almacen.conectarDB();
-		if(arguments.length){
-			almacen.nombreHabitacion  	= arguments[0];
-		}
+		almacen.nombreHabitacion  	= nh;
 
 		almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 	},
@@ -112,12 +110,12 @@ var almacen = {
             } catch (error){
                 console.log("Prueba local. Error: " + error);
                 alert("Error, no se pudo agregar el cuarto porque este ya existe.");
-                return false;
             }
 		} else{
-			almacen.guardarHabitacionMenu();
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+            alert("llegue aqui");
+            almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
 	},
 
