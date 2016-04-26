@@ -5,6 +5,7 @@ var almacen = {
 	dirDispositivo: null,
 	tipoDispositivo: null,
 	numControles: null,
+	listaHabitaciones: null,
 
 	conectarDB: function(){
 		return window.openDatabase("ScarlettApp", "1.0", "Scarlett App", 1000000);
@@ -31,9 +32,9 @@ var almacen = {
 		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
-		//alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
+		alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		tx.executeSql('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"', [], almacen.comprobarDisponibilidad);
-		//alert("comprobado");
+		alert("comprobado");
 	},
 
 	guardarHabitacion: function(nh, nd, dd, td, nc){
@@ -100,7 +101,7 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-
+		alert("llegue aqui primero");
 		if(cantidad > 0){
 			try{
                 navigator.notification.alert("Error, no se pudo agregar el cuarto porque este ya existe.", function(){
@@ -165,15 +166,17 @@ var almacen = {
 
 	recuperarMenu: function(tx, res){
 		
+		almacen.listaHabitaciones = [];
 		var cantidad = res.rows.length;
 		//var resultado = '<tr><td colspan="4">No hay reservas en el historial</td></tr>';
 
 		if(cantidad > 0){
 			//si hay reservas en el historial
-			for(var h = 0; h < cantidad; h++){
+			for(var h = 0; h < cantidad; h++){ 
 				var roomName = res.rows.item(h).nameroom;
     			var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
         
+        		almacen.listaHabitaciones.push(roomName);
        			$("#roomList").append(listItem).listview('refresh');
         	}
         	$("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);

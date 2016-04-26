@@ -54,6 +54,7 @@ var scarlett = {
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
         
         try{
+            alert(almacen.listaHabitaciones);
             almacen.comprobarExistenciaMenu(roomName);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
