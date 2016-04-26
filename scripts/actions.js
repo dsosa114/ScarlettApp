@@ -50,17 +50,23 @@ var scarlett = {
     },
 
     agregarNuevoCuarto: function(){
+        var noExiste = true; 
     	var roomName = document.getElementById("newRoomName").value;
     	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
         
         try{
-            almacen.guardarHabitacionMenu(roomName);
+            noExiste = almacen.comprobarExistenciaMenu(roomName);
+            if(noExiste){
+                almacen.guardarHabitacionMenu(roomName);
+            }
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
         }
 
-        $("#roomList").append(listItem).listview('refresh');
-        $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+        if(noExiste){
+            $("#roomList").append(listItem).listview('refresh');
+            $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+        }
 
         $("#newRoomDialog").popup("close");
 
@@ -220,7 +226,7 @@ var scarlett = {
 
 		//alert(controlName + controlAddr + controlType + controlNumb + modName);
 
-		$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
+		$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
 		for(var i = 1; i <= controlNumb; i++){
 			newModName = modName + "-" + i;
 			if(controlType == "Luces"){
@@ -332,8 +338,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//$(scarlett.deviceready);
+//
+$(scarlett.deviceready);
 //console.log("Pruebas locales. Error: " + error);
 //Internet Explorer
-//
-$(scarlett.onDeviceReady);
+//$(scarlett.onDeviceReady);

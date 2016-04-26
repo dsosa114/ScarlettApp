@@ -19,6 +19,23 @@ var almacen = {
 
 	},
 
+	comprobarExistenciaMenu: function(nh){
+		almacen.db   				= almacen.conectarDB();
+		almacen.nombreHabitacion  	= nh;
+
+		almacen.db.transaction(almacen.disponibilidadCuartos, almacen.error, almacen.exito);
+	},
+
+	disponibilidadCuartos: function(tx){
+		//Crear tabla de historial
+		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
+		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
+		//Insertar los datos de la nueva reservacion
+		//alert('INSERT INTO menu (nameroom) VALUES (' + alamacen.nombreHabitacion );
+		tx.executeSql('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"', [], almacen.comprobarDisponibilidad);
+		//alert("ya hay cuartos menu");
+	},
+
 	guardarHabitacion: function(nh, nd, dd, td, nc){
 		almacen.db					= almacen.conectarDB();
 		almacen.nombreHabitacion  	= nh;
@@ -81,6 +98,25 @@ var almacen = {
 		tx.executeSql('SELECT * FROM menu', [], almacen.recuperarMenu);
 	},
 
+	comprobarDisponibilidad: function(tx, res){
+		var cantidad = res.rows.length;
+
+		if(cantidad > 0){
+			try{
+                navigator.notification.alert("Error, no se pudo agregar el cuarto porque este ya existe.", function(){
+                    return false;
+                        //window.location.href = "#newModuleDialog";
+                }, "Error", "Ok");
+            } catch (error){
+                console.log("Prueba local. Error: " + error);
+                alert("Error, no se pudo agregar el cuarto porque este ya existe.");
+                return false;
+            }
+		} else{
+			return true;
+		}
+	},
+
 	reconstruirHabitacion: function(tx, res){
 		var cantidad = res.rows.length;
 		//var resultado = '<tr><td colspan="4">No hay reservas en el historial</td></tr>';
@@ -138,6 +174,7 @@ var almacen = {
         
        			$("#roomList").append(listItem).listview('refresh');
         	}
+        	$("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
         }
 	}
 };

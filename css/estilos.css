@@ -3,6 +3,10 @@
     height: 20%;
 }
 
+.foto-cuarto{
+	width: 100%;
+}
+
 .ui-popup-container, .ui-popup {
     height: auto;
     width: 95%;
