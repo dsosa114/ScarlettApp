@@ -32,9 +32,9 @@ var almacen = {
 		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
 		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
 		//Insertar los datos de la nueva reservacion
-		alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
+		//alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		tx.executeSql('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"', [], almacen.comprobarDisponibilidad);
-		alert("comprobado");
+		//alert("comprobado");
 	},
 
 	guardarHabitacion: function(nh, nd, dd, td, nc){
@@ -101,7 +101,8 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		alert("llegue aqui primero");
+		var listItem = "<li><a href='#' room='" + almacen.nombreHabitacion + "'>" + almacen.nombreHabitacion + "</a></li>";
+		
 		if(cantidad > 0){
 			try{
                 navigator.notification.alert("Error, no se pudo agregar el cuarto porque este ya existe.", function(){
@@ -116,6 +117,7 @@ var almacen = {
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
             alert("llegue aqui");
+            alamacen.guardarHabitacionMenu(alamacen.nombreHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
 	},
