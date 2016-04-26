@@ -115,7 +115,7 @@ var almacen = {
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
             alert("llegue aqui");
-            almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
+            //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
 	},
 
