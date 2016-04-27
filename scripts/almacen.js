@@ -100,7 +100,7 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+		var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
 		
 		if(cantidad > 0){
 			try{
@@ -114,9 +114,13 @@ var almacen = {
             }
 		} else{
             $("#roomList").append(listItem).listview('refresh');
-            $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
-            //alert("llegue aqui");
-            $.mobile.loading( 'hide');
+            $(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+            // Click delete split-button to remove list item
+            $( ".delete" ).off('tap').on( "tap", function() {
+                var listitem = $( this ).parent( "li.ui-li-has-alt" );
+                scarlett.confirmAndDelete( listitem );
+            });
+            alert("llegue aqui");
             almacen.guardarHabitacionMenu(almacen.nombreHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
@@ -174,11 +178,16 @@ var almacen = {
 			//si hay reservas en el historial
 			for(var h = 0; h < cantidad; h++){ 
 				var roomName = res.rows.item(h).nameroom;
-    			var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+    			var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
      
        			$("#roomList").append(listItem).listview('refresh');
         	}
-        	$("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+        	$(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+        	// Click delete split-button to remove list item
+            $( ".delete" ).off('tap').on( "tap", function() {
+                var listitem = $( this ).parent( "li.ui-li-has-alt" );
+                scarlett.confirmAndDelete( listitem );
+            });
         }
 	}
 };

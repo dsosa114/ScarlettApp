@@ -20,7 +20,12 @@ var scarlett = {
         $("#addModuleBtn").tap(scarlett.enviarAddModule);
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
-			$("#roomList a").on("tap", scarlett.llenarPlantillaCuarto);
+			$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+            // Click delete split-button to remove list item
+            $( ".delete" ).off('tap').on( "tap", function() {
+                var listitem = $( this ).parent( "li.ui-li-has-alt" );
+                scarlett.confirmAndDelete( listitem );
+            });
 		});
 
 		$(document).on('pagebeforeshow', '#roomTemplate', function(){
@@ -34,9 +39,9 @@ var scarlett = {
 		});
 
         //Test
-        $( document ).on( "pagebeforeshow", "#home", function() {
+        $( document ).on( "pageshow", "#home", function() {
             // Swipe to remove list item
-            $( document ).on( "swipeleft swiperight", "#roomList li.ui-li", function( event ) {
+            $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
                 var listitem = $( this ),
                 // These are the classnames used for the CSS transition
                 dir = event.type === "swipeleft" ? "left" : "right",
@@ -49,8 +54,8 @@ var scarlett = {
                 // Remove the class that is used to hide the delete button on touch devices
                 $( "#roomList" ).removeClass( "touch" );
                 // Click delete split-button to remove list item
-                $( ".delete" ).on( "taphold", function() {
-                    var listitem = $( this ).parent( "li.ui-li" );
+                $( ".delete" ).off('tap').on( "tap", function() {
+                    var listitem = $( this ).parent( "li.ui-li-has-alt" );
                     scarlett.confirmAndDelete( listitem );
                 });
             }
@@ -81,7 +86,7 @@ var scarlett = {
         // Show the confirmation popup
         $( "#confirm" ).popup( "open" );
         // Proceed when the user confirms
-        $( "#confirm #yes" ).on( "click", function() {
+        $( "#confirm #yes" ).on( "tap", function() {
             // Remove with a transition
             if ( transition ) {
                 listitem
@@ -94,19 +99,19 @@ var scarlett = {
                         // ...the list item will be removed
                         listitem.remove();
                         // ...the list will be refreshed and the temporary class for border styling removed
-                        $( "#list" ).listview( "refresh" ).find( ".ui-li.border" ).removeClass( "border" );
+                        $( "#roomList" ).listview( "refresh" ).find( ".ui-li.border" ).removeClass( "border" );
                     })
                     // During the transition the previous list item should get bottom border
-                    .prev( "li.ui-li" ).addClass( "border" );
+                    .prev( "li.ui-li-has-alt" ).addClass( "border" );
             }
             // If it's not a touch device or the CSS transition isn't supported just remove the list item and refresh the list
             else {
                 listitem.remove();
-                $( "#list" ).listview( "refresh" );
+                $( "#roomList" ).listview( "refresh" );
             }
         });
         // Remove active state and unbind when the cancel button is clicked
-        $( "#confirm #cancel" ).on( "click", function() {
+        $( "#confirm #cancel" ).on( "tap", function() {
             listitem.removeClass( "ui-btn-down-d" );
             $( "#confirm #yes" ).off();
         });
@@ -114,17 +119,24 @@ var scarlett = {
 
     agregarNuevoCuarto: function(){
     	var roomName = document.getElementById("newRoomName").value;
-    	var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+    	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
         
         try{
             $.mobile.loading('show');
             almacen.comprobarExistenciaMenu(roomName);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
+            $.mobile.loading('hide');
             $("#roomList").append(listItem).listview('refresh');
-            $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+            $(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+            // Click delete split-button to remove list item
+            $( ".delete" ).off('tap').on( "tap", function() {
+                var listitem = $( this ).parent( "li.ui-li-has-alt" );
+                scarlett.confirmAndDelete( listitem );
+            });
         }
 
+        $.mobile.loading( 'hide');
         $("#newRoomDialog").popup("close");
 
         window.location.href = "#home";
