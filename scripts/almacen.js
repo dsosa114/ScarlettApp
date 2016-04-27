@@ -100,7 +100,7 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+		var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'>" + almacen.nombreHabitacion + "</a><a href='#' class='delete'>Delete</a></li>";
 		
 		if(cantidad > 0){
 			try{
@@ -120,7 +120,7 @@ var almacen = {
                 var listitem = $( this ).parent( "li.ui-li-has-alt" );
                 scarlett.confirmAndDelete( listitem );
             });
-            alert("llegue aqui");
+            $.mobile.loading( 'hide');
             almacen.guardarHabitacionMenu(almacen.nombreHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}

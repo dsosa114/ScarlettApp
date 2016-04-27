@@ -50,7 +50,8 @@ var scarlett = {
                 scarlett.confirmAndDelete( listitem, transition );
             });
             // If it's not a touch device...
-            if ( ! $.mobile.support.touch ) {
+            if ( !$.mobile.support.touch ) {
+                console.log($.mobile.support.touch);
                 // Remove the class that is used to hide the delete button on touch devices
                 $( "#roomList" ).removeClass( "touch" );
                 // Click delete split-button to remove list item
@@ -136,7 +137,6 @@ var scarlett = {
             });
         }
 
-        $.mobile.loading( 'hide');
         $("#newRoomDialog").popup("close");
 
         window.location.href = "#home";
