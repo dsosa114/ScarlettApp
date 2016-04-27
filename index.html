@@ -18,7 +18,7 @@
             <a href="#newRoomDialog" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar cuarto</a>
         </div>
         <div class="ui-content">
-            <ul id="roomList" data-role="listview">
+            <ul id="roomList" class="touch" data-role="listview" data-icon="false" data-split-icon="delete" data-split-theme="d">
             </ul>
         </div>
         <div data-role="footer" data-position="fixed" class="ui-bar">
@@ -28,6 +28,17 @@
                 </ul>
             </div>
         </div>
+        <div id="confirm" class="ui-content" data-role="popup" data-theme="none">
+            <p id="question">Are you sure you want to delete</p>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <a id="yes" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Yes</a>
+                </div>
+                <div class="ui-block-b">
+                    <a id="cancel" data-role="button" data-mini="true" data-shadow="false" data-theme="b" data-rel="back">Cancel</a>
+                </div>
+            </div>
+        </div><!-- /popup -->
         <div id="newRoomDialog" data-role="popup">
             <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
             <div data-role="header">

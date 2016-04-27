@@ -5,7 +5,6 @@ var almacen = {
 	dirDispositivo: null,
 	tipoDispositivo: null,
 	numControles: null,
-	listaHabitaciones: null,
 
 	conectarDB: function(){
 		return window.openDatabase("ScarlettApp", "1.0", "Scarlett App", 1000000);
@@ -101,7 +100,7 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		var listItem = "<li><a href='#' room='" + almacen.nombreHabitacion + "'>" + almacen.nombreHabitacion + "</a></li>";
+		var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
 		
 		if(cantidad > 0){
 			try{
@@ -116,7 +115,8 @@ var almacen = {
 		} else{
             $("#roomList").append(listItem).listview('refresh');
             $("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
-            alert("llegue aqui");
+            //alert("llegue aqui");
+            $.mobile.loading( 'hide');
             almacen.guardarHabitacionMenu(almacen.nombreHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
@@ -167,8 +167,6 @@ var almacen = {
 	},
 
 	recuperarMenu: function(tx, res){
-		
-		almacen.listaHabitaciones = [];
 		var cantidad = res.rows.length;
 		//var resultado = '<tr><td colspan="4">No hay reservas en el historial</td></tr>';
 
@@ -176,9 +174,8 @@ var almacen = {
 			//si hay reservas en el historial
 			for(var h = 0; h < cantidad; h++){ 
 				var roomName = res.rows.item(h).nameroom;
-    			var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a></li>";
-        
-        		almacen.listaHabitaciones.push(roomName);
+    			var listItem = "<li><a href='#' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+     
        			$("#roomList").append(listItem).listview('refresh');
         	}
         	$("#roomList a").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
