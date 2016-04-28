@@ -118,6 +118,16 @@ var scarlett = {
                     })
                     // During the transition the previous list item should get bottom border
                     .prev( "li.ui-li-has-alt" ).addClass( "border" );
+                $( "#roomList" ).addClass("touch");
+                $( "#roomList" ).listview( "refresh" );
+                $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+                try{
+                    almacen.eliminarHabitacionMenu(roomName);
+                } catch (error){
+                    console.log("No hay base de datos disponible por el momento. Error: " + error);
+                    alert("Ocurrio un error con la base de datos");
+                }
+
             }
             // If it's not a touch device or the CSS transition isn't supported just remove the list item and refresh the list
             else {
@@ -125,6 +135,12 @@ var scarlett = {
                 $( "#roomList" ).addClass("touch");
                 $( "#roomList" ).listview( "refresh" );
                 $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+                try{
+                    almacen.eliminarHabitacionMenu(roomName);
+                } catch (error){
+                    console.log("No hay base de datos disponible por el momento. Error: " + error);
+                    alert("Ocurrio un error con la base de datos");
+                }
             }
         });
         // Remove active state and unbind when the cancel button is clicked
@@ -140,8 +156,8 @@ var scarlett = {
     	var roomName = document.getElementById("newRoomName").value;
     	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
         
+        $.mobile.loading('show');
         try{
-            $.mobile.loading('show');
             almacen.comprobarExistenciaMenu(roomName);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
@@ -167,6 +183,7 @@ var scarlett = {
             });
         }
 
+        $.mobile.loading('hide');
         $("#newRoomDialog").popup("close");
 
         window.location.href = "#home";

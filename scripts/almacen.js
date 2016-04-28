@@ -74,6 +74,9 @@ var almacen = {
 		tx.executeSql('DROP TABLE ' + almacen.nombreHabitacion);
 		//Eliminar habitacion del menu
 		tx.executeSql('DELETE FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
+		navigator.notification.alert("Se elimino " + almacen.nombreHabitacion + " y todos sus dispositivos correctamente" , function(){
+           		return true;
+            }, "¡Éxito!", "Ok");
 	},
 
 	tablaHabitacionMenu: function(tx){
