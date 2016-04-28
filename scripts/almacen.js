@@ -48,6 +48,13 @@ var almacen = {
 
 	},
 
+	eliminarHabitacionMenu: function(nh){
+		almacen.db   				= almacen.conectarDB();
+		almacen.nombreHabitacion  	= nh;
+
+		almacen.db.transaction(almacen.eliminarMenuDispositivos, almacen.error, almacen.exito);
+	},
+
 	guardarHabitacionMenu: function(nh){
 		almacen.db   				= almacen.conectarDB();
 		almacen.nombreHabitacion  	= nh;
@@ -60,6 +67,13 @@ var almacen = {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS ' + almacen.nombreHabitacion + ' (id INTEGER PRIMARY KEY, named, addrd, typed, numc)');
 		//Insertar los datos de la nueva reservacion
 		tx.executeSql('INSERT INTO ' + almacen.nombreHabitacion + ' (named, addrd, typed, numc) VALUES ("' + almacen.nombreDispositivo + '", "' + almacen.dirDispositivo + '", "' + almacen.tipoDispositivo + '", "' + almacen.numControles + '")');
+	},
+
+	eliminarMenuDispositivos: function(tx){
+		//Eliminar tabla de habitacion
+		tx.executeSql('DROP TABLE ' + almacen.nombreHabitacion);
+		//Eliminar habitacion del menu
+		tx.executeSql('DELETE FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 	},
 
 	tablaHabitacionMenu: function(tx){
@@ -115,12 +129,24 @@ var almacen = {
 		} else{
             $("#roomList").append(listItem).listview('refresh');
             $(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+            $(".roomItem").off('taphold').on("taphold", function(){
+                $(".roomItem").off("tap");
+                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                    var listitem = $( this ),
+                    // These are the classnames used for the CSS transition
+                    dir = event.type === "swipeleft" ? "left" : "right",
+                    // Check if the browser supports the transform (3D) CSS transition
+                    transition = $.support.cssTransform3d ? dir : false;
+                    scarlett.confirmAndDelete( listitem, transition );
+                });
+                $( "#roomList" ).removeClass( "touch" );
+            });
             // Click delete split-button to remove list item
             $( ".delete" ).off('tap').on( "tap", function() {
                 var listitem = $( this ).parent( "li.ui-li-has-alt" );
                 scarlett.confirmAndDelete( listitem );
             });
-            $.mobile.loading( 'hide');
+            
             almacen.guardarHabitacionMenu(almacen.nombreHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
@@ -183,6 +209,18 @@ var almacen = {
        			$("#roomList").append(listItem).listview('refresh');
         	}
         	$(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
+        	$(".roomItem").off('taphold').on("taphold", function(){
+                $(".roomItem").off("tap");
+                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                    var listitem = $( this ),
+                    // These are the classnames used for the CSS transition
+                    dir = event.type === "swipeleft" ? "left" : "right",
+                    // Check if the browser supports the transform (3D) CSS transition
+                    transition = $.support.cssTransform3d ? dir : false;
+                    scarlett.confirmAndDelete( listitem, transition );
+                });
+                $( "#roomList" ).removeClass( "touch" );
+            });
         	// Click delete split-button to remove list item
             $( ".delete" ).off('tap').on( "tap", function() {
                 var listitem = $( this ).parent( "li.ui-li-has-alt" );
