@@ -71,7 +71,7 @@ var almacen = {
 
 	eliminarMenuDispositivos: function(tx){
 		//Eliminar tabla de habitacion
-		tx.executeSql('DROP TABLE ' + almacen.nombreHabitacion);
+		tx.executeSql('DROP TABLE IF EXISTS ' + almacen.nombreHabitacion);
 		//Eliminar habitacion del menu
 		tx.executeSql('DELETE FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		navigator.notification.alert("Se elimino " + almacen.nombreHabitacion + " y todos sus dispositivos correctamente" , function(){
@@ -140,7 +140,7 @@ var almacen = {
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
-                    scarlett.confirmAndDelete( listitem, transition );
+                    //scarlett.confirmAndDelete( listitem, transition );
                 });
                 $( "#roomList" ).removeClass( "touch" );
             });
@@ -220,7 +220,7 @@ var almacen = {
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
-                    scarlett.confirmAndDelete( listitem, transition );
+                    //scarlett.confirmAndDelete( listitem, transition );
                 });
                 $( "#roomList" ).removeClass( "touch" );
             });
