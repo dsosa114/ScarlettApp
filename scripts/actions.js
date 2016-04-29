@@ -18,19 +18,34 @@ var scarlett = {
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
         $("#createControlBtn").tap(scarlett.crearNuevoControlCuarto);
         $("#addModuleBtn").tap(scarlett.enviarAddModule);
+        $("#newModuleType").on('change', function(){
+            var controlType = document.getElementById("newModuleType").value;
+            var controlNumb = document.getElementById("newModuleNumb");
+
+            if (controlType == "Persiana"){
+                /*$("#moduleOptions").append('<li data-role="list-divider" class="orientation">Orientación:</li>\
+                    <li><select id="blindOrientation" class="orientation">\
+                    <option>Normal</option>\
+                    <option>Invertida</option>\
+                    </select></li>').listview('refresh').trigger("create");*/
+                controlNumb.value = 1;
+                $("#newModuleNumb").selectmenu('disable').selectmenu('refresh');
+                $( "#moduleOptions li" ).removeClass( "orientation" );
+            }
+        });
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
 			$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
             $(".roomItem").on("taphold", function(){
                 $(".roomItem").off("tap");
-                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                /*$( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
                     var listitem = $( this ),
                     // These are the classnames used for the CSS transition
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
                     //scarlett.confirmAndDelete( listitem, transition );
-                });
+                });*/
                 $( "#roomList" ).removeClass( "touch" );
             });
             // Click delete split-button to remove list item
@@ -79,8 +94,8 @@ var scarlett = {
         // Proceed when the user confirms
         $( "#confirm #yes" ).on( "tap", function() {
             // Remove with a transition
-            if ( transition ) {
-                listitem
+            /*if ( transition ) {
+                /*listitem
                     // Remove the highlight
                     .removeClass( "ui-btn-down-d" )
                     // Add the class for the transition direction
@@ -103,21 +118,20 @@ var scarlett = {
                     console.log("No hay base de datos disponible por el momento. Error: " + error);
                     alert("Ocurrio un error con la base de datos");
                 }
-
-            }
+            }*/
             // If it's not a touch device or the CSS transition isn't supported just remove the list item and refresh the list
-            else {
-                listitem.remove();
-                $( "#roomList" ).addClass("touch");
-                $( "#roomList" ).listview( "refresh" );
-                $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
-                try{
-                    almacen.eliminarHabitacionMenu(roomName);
-                } catch (error){
-                    console.log("No hay base de datos disponible por el momento. Error: " + error);
-                    alert("Ocurrio un error con la base de datos");
-                }
+            //else {
+            listitem.remove();
+            $( "#roomList" ).addClass("touch");
+            $( "#roomList" ).listview( "refresh" );
+            $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+            try{
+                almacen.eliminarHabitacionMenu(roomName);
+            } catch (error){
+                console.log("No hay base de datos disponible por el momento. Error: " + error);
+                //alert("Ocurrio un error con la base de datos");
             }
+            //}
         });
         // Remove active state and unbind when the cancel button is clicked
         $( "#confirm #cancel" ).on( "tap", function() {
@@ -142,14 +156,14 @@ var scarlett = {
             $(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
             $(".roomItem").off('taphold').on("taphold", function(){
                 $(".roomItem").off("tap");
-                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                /*$( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
                     var listitem = $( this ),
                     // These are the classnames used for the CSS transition
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
                     //scarlett.confirmAndDelete( listitem, transition );
-                });
+                });*/
                 $( "#roomList" ).removeClass( "touch" );
             });
             // Click delete split-button to remove list item
@@ -228,6 +242,29 @@ var scarlett = {
 		});
 	},
 
+    enviarOptions: function(dev, con){
+        //alert(nom+" "+email+" "+tel)
+        $.ajax({
+            method: "POST",
+            url:"http://192.168.0.41:2000/outlet",
+            //url:"localhost:2000/outlet",
+            //url:"http://scarlett.local:2000/outlet",
+            //url:"http://192.168.42.1:2000/outlet",
+            data:{
+                modules:dev,
+                control: con
+            },
+            timeout: 1000,
+            error: function(e){
+                alert("Error de conexión con AJAX");
+                //alert(e.response);
+            }
+
+        }).done(function(mensaje){
+            alert(mensaje);
+        });
+    },
+
     enviarAddModule: function(){
         $.mobile.loading( 'show', {text: "Buscando dispositivos. Espere...", textVisible: true, textonly: false});
         $("#newModuleName").val("").textinput("refresh");
@@ -245,15 +282,20 @@ var scarlett = {
                 $.mobile.loading( 'hide');
                 try{
                     navigator.notification.alert("Error de conexión, no se pudo agregar módulo automáticamente.", function(){
+                        $("#newModuleName").textinput('enable').textinput('refresh');
                         $("#newModuleAddr").textinput('enable').textinput('refresh');
                         $("#newModuleType").selectmenu('enable').selectmenu('refresh');
                         $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
+                        $("#moduleOptions .li-div-last-child" ).addClass( "orientation" );
+                        $("#moduleOptions .ui-last-child" ).addClass( "orientation" );
                         $("#newModuleDialog").popup("open");
                         //window.location.href = "#newModuleDialog";
                     }, "Error", "Ok");
                 } catch (error){
                     console.log("Prueba local. Error: " + error);
                     alert("Error de conexión, no se pudo agregar módulo automáticamente.");
+                    $("#moduleOptions .li-div-last-child" ).addClass( "orientation" );
+                    $("#moduleOptions .ui-last-child" ).addClass( "orientation" );
                     $("#newModuleDialog").popup("open");
                 }
                 //alert(e.response);
@@ -264,20 +306,26 @@ var scarlett = {
             if(mensaje == "No module detected. Check your conection"){
                 try{
                     navigator.notification.alert("No hay módulos conectados, activando modo manual.", function(){
+                        $("#newModuleName").textinput('enable').textinput('refresh');
                         $("#newModuleAddr").textinput('enable').textinput('refresh');
                         $("#newModuleType").selectmenu('enable').selectmenu('refresh');
                         $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
+                        $("#moduleOptions .li-div-last-child" ).addClass( "orientation" );
+                        $("#moduleOptions .ui-last-child" ).addClass( "orientation" );
                         $("#newModuleDialog").popup("open");
                         //window.location.href = "#newModuleDialog";
                     }, "Error", "Ok");
                 } catch (error){
                     console.log("Prueba local. Error: " + error);
                     alert("No hay módulos conectados, activando modo manual.");
+                    $("#moduleOptions .li-div-last-child" ).addClass( "orientation" );
+                    $("#moduleOptions .ui-last-child" ).addClass( "orientation" );
                     $("#newModuleDialog").popup("open");
                 }
                 
             } else{
                 //alert(mensaje);
+                $("#newModuleName").textinput('enable').textinput('refresh');
                 var splitMsg = mensaje.split(':');
                 var controlAddr = document.getElementById("newModuleAddr");
                 var controlType = document.getElementById("newModuleType");
@@ -304,6 +352,8 @@ var scarlett = {
                     alert("Error: " + error);
                 }
 
+                $("#moduleOptions .li-div-last-child" ).addClass( "orientation" );
+                $("#moduleOptions .ui-last-child" ).addClass( "orientation" );
                 $("#newModuleDialog").popup("open");
             }
         });
@@ -331,11 +381,18 @@ var scarlett = {
 				$("#deviceList").append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
 				console.log("Contacto " + i);
 			} else if (controlType == "Persiana"){
+                var controlOrientation = document.getElementById("blindOrientation").value;
+
 				$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
 					<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
 					<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 					</form></li>').listview('refresh').trigger("create");
 				console.log("Persiana " + i);
+                if (controlOrientation == "Normal"){
+                    scarlett.enviarOptions(controlAddr, 10);
+                } else{
+                    scarlett.enviarOptions(controlAddr, 10);
+                }
 			}
 		}
 
@@ -344,7 +401,6 @@ var scarlett = {
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
         }
-        
         $("#newModuleDialog").popup("close");
 		window.location.href = "#roomTemplate";
 		//var listItem = "<li><a href='#' id='" + device.address + "'>" + device.name + "</a></li>";

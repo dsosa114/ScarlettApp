@@ -88,3 +88,7 @@ li.ui-li.border {
     font-size: inherit; /* The cloned topic will have class ui-li-desc so we negate the font-size settings of this class */
     text-align: center;
 }
+
+#moduleOptions .orientation{
+    display: none !important;
+}

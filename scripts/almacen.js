@@ -134,14 +134,14 @@ var almacen = {
             $(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
             $(".roomItem").off('taphold').on("taphold", function(){
                 $(".roomItem").off("tap");
-                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                /*$( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
                     var listitem = $( this ),
                     // These are the classnames used for the CSS transition
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
                     //scarlett.confirmAndDelete( listitem, transition );
-                });
+                });*/
                 $( "#roomList" ).removeClass( "touch" );
             });
             // Click delete split-button to remove list item
@@ -214,14 +214,14 @@ var almacen = {
         	$(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);
         	$(".roomItem").off('taphold').on("taphold", function(){
                 $(".roomItem").off("tap");
-                $( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
+                /*$( document ).on( "swipeleft swiperight", "#roomList li.ui-li-has-alt", function( event ) {
                     var listitem = $( this ),
                     // These are the classnames used for the CSS transition
                     dir = event.type === "swipeleft" ? "left" : "right",
                     // Check if the browser supports the transform (3D) CSS transition
                     transition = $.support.cssTransform3d ? dir : false;
                     //scarlett.confirmAndDelete( listitem, transition );
-                });
+                });*/
                 $( "#roomList" ).removeClass( "touch" );
             });
         	// Click delete split-button to remove list item
