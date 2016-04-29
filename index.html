@@ -15,7 +15,7 @@
                 <img class="foto-logo" src="img/ScarlettH.png"/>
             </div>
             <a href="#" class="fecha"></a>
-            <a href="#newRoomDialog" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar cuarto</a>
+            <a href="#newRoomDialog" id="newRoomBtn" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar cuarto</a>
         </div>
         <div class="ui-content">
             <ul id="roomList" class="touch" data-role="listview" data-icon="false" data-split-icon="delete">
@@ -53,6 +53,41 @@
                     <li>
                         <input id="newRoomName" type="text" placeholder="Escribe un nombre">
                     </li>
+                    <li data-role="list-divider">
+                        Descripción:
+                    </li>
+                    <li>
+                        <select id="newRoomDesc" data-native-menu="false">
+                            <option></option>
+                            <option value="1">Recámara</option>
+                            <option value="2">Comedor</option>
+                            <option value="3">Sala</option>
+                            <option value="4">Cocina</option>
+                            <option value="5">Patio</option>
+                            <option value="6">Garage</option>
+                            <option value="7">Estudio</option>
+                            <option value="8">Baño</option>
+                            <option value="9">Perzonalizada...</option>
+                        </select>
+                        <input class="hidden" id="descripcionPerzonalizada" type="text" placeholder="Escribe una descripción...">
+                    </li>
+                    <li data-role="list-divider">
+                        Ícono:
+                    </li>
+                    <li data-role="collapsible" data-collapsed="true" data-iconpos="right">
+                        <h2>Elije el que más te guste</h2>
+                        <ul data-role="listview">
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/1.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/2.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/3.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/4.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/5.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/6.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/7.jpg"></a></li>
+                            <li><a href="#"><img class="foto-galeria" src="img/galeria/8.jpg"></a></li>
+                            <li><a href="#">Seleccionar archivo...</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div data-role="footer" class="ui-bar">
@@ -79,6 +114,24 @@
 
             </ul>
         </div>
+        <div id="confirm2" class="ui-content" data-role="popup">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-role="header">
+                <h1>Eliminar dispositivo</h1>
+            </div>
+            <div class="ui-content">
+                <p id="question2" style="text-align:center;">¿Estas seguro de querer borrar: </p>
+                <p style="text-align:center;">para siempre?</p>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a id="yes2" data-role="button" data-mini="true" data-shadow="false" data-rel="back">Yes</a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a id="cancel2" data-role="button" data-mini="true" data-shadow="false" data-rel="back" class="ui-btn-active">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /popup -->
         <div data-role="footer" data-position="fixed" class="ui-bar">
         </div>
         <div id="newModuleDialog" data-role="popup">

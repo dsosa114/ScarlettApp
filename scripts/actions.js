@@ -32,6 +32,9 @@ var scarlett = {
                 $("#newModuleNumb").selectmenu('disable').selectmenu('refresh');
                 $( "#moduleOptions li" ).removeClass( "orientation" );
             }
+            else{
+                $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
+            }
         });
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
@@ -62,6 +65,10 @@ var scarlett = {
                 afteropen: function( event, ui ) {
                     $('#newModuleName').focus();
                 }
+            });
+            $(".deviceItem").off('taphold').on('taphold', function(){
+                var addr = $(this).attr("daddr");
+                alert(addr);
             });
 		});
 
@@ -142,9 +149,43 @@ var scarlett = {
         });
     },
 
+    confirmAndDelete2: function( listitem ) {
+        // Highlight the list item that will be removed
+        listitem.addClass( "ui-btn-down-d" );
+        //var roomName = $("#roomList .ui-btn-down-d .roomItem").attr('room');
+        // Inject topic in confirmation popup after removing any previous injected topics
+        $( "#confirm2 .device" ).remove();
+        //$("#confirm").append("<p class='room'>" + roomName + "</p>");
+        $("#question2").after("<p style='font-weight:bold; text-align:center;' class='device'>" + listitem.attr('name') + " (" + listitem.attr('daddr') + ") </p>");
+        // Show the confirmation popup
+        $( "#confirm2" ).popup( "open" );
+        // Proceed when the user confirms
+        $( "#confirm2 #yes2" ).on( "tap", function() {
+
+            listitem.remove();
+            //$( "#roomList" ).addClass("touch");
+            $( "#deviceList" ).listview( "refresh" );
+            //$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+            try{
+                almacen.eliminarHabitacionMenu(roomName);
+            } catch (error){
+                console.log("No hay base de datos disponible por el momento. Error: " + error);
+                //alert("Ocurrio un error con la base de datos");
+            }
+            //}
+        });
+        // Remove active state and unbind when the cancel button is clicked
+        $( "#confirm2 #cancel2" ).on( "tap", function() {
+            listitem.removeClass( "ui-btn-down-d" );
+            $( "#confirm2 #yes2" ).off();
+            //$( "#roomList" ).addClass("touch");
+            //$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+        });
+    },
+
     agregarNuevoCuarto: function(){
     	var roomName = document.getElementById("newRoomName").value;
-    	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+    	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/galeria/1.jpg'/>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
         
         $.mobile.loading('show');
         try{
@@ -365,25 +406,43 @@ var scarlett = {
 		var controlType = document.getElementById("newModuleType").value;
 		var controlNumb = document.getElementById("newModuleNumb").value;
 		var modName = controlName.split(' ').join('-');
-
+        var valid_name = true;
 		//alert(controlName + controlAddr + controlType + controlNumb + modName);
+        var listItems = $("#deviceList .deviceItem");
+        listItems.each(function(idx, li) {
+            valid_name = false;
 
-		$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
-		for(var i = 1; i <= controlNumb; i++){
-			newModName = modName + "-" + i;
+            if(modName != $(li).attr('name')){
+                valid_name = true;
+            }
+            console.log(modName + ", " + $(li).attr('name') + ", " + valid_name);// and the rest of your code
+        });
+
+        if(valid_name){
+		  //$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
+          $("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
+          $(".deviceItem").off('taphold').on('taphold', function(){
+            scarlett.confirmAndDelete2($(this));
+          });
+
+		  for(var i = 1; i <= controlNumb; i++){
+		    newModName = modName + "-" + i;
 			if(controlType == "Luces"){
-				$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
+                 //console.log(modName);
+			     $('#'+ modName).append('<li>\
+                    <form class="ui-grid-a ui-responsive">\
 					<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
 					<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 					</form></li>').listview('refresh').trigger("create");
 				console.log("Foco " + i);
 			} else if (controlType == "Contactos"){
-				$("#deviceList").append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
+				$('#'+ modName).append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
 				console.log("Contacto " + i);
 			} else if (controlType == "Persiana"){
                 var controlOrientation = document.getElementById("blindOrientation").value;
 
-				$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
+				$('#'+ modName).append('<li>\
+                    <form class="ui-grid-a ui-responsive">\
 					<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
 					<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 					</form></li>').listview('refresh').trigger("create");
@@ -394,7 +453,11 @@ var scarlett = {
                     scarlett.enviarOptions(controlAddr, 10);
                 }
 			}
-		}
+		  }
+        }
+        else {
+            alert("Error: Ese nombre ya esta ocupado por otro dispositivo");
+        }
 
         try{
             almacen.guardarHabitacion(scarlett.nombreHabitacion, controlName, controlAddr, controlType, controlNumb);

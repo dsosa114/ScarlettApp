@@ -4,7 +4,8 @@
 }
 
 .foto-cuarto{
-	width: 100%;
+	width: auto;
+    height: auto;
 }
 
 .ui-popup-container, .ui-popup {
