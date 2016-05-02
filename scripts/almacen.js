@@ -184,42 +184,53 @@ var almacen = {
 				var controlType = res.rows.item(h).typed;
 				var controlNumb = parseInt(res.rows.item(h).numc);
 				var modName = controlName.split(' ').join('-');
+				var valid_name = 0;
+				//alert(controlName + controlAddr + controlType + controlNumb + modName);
+        		var listItems = $("#deviceList .deviceItem");
+        		listItems.each(function(index, li) {
+            		if(modName == $(li).attr('name')){
+                		valid_name++;
+            		}
+            		console.log(modName + ", " + $(li).attr('name') + ", " + valid_name);// and the rest of your code
+        		});
 
-				//$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
-          		$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
-          		$(".deviceItem").off('taphold').on('taphold', function(){
-            		scarlett.confirmAndDelete2($(this));
-          		});
+        		if(valid_name == 0){
+		  			//$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
+          			$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
+          			$(".deviceItem").off('taphold').on('taphold', function(){
+            			scarlett.confirmAndDelete2($(this));
+          			});
 
-		  		for(var i = 1; i <= controlNumb; i++){
-		    		newModName = modName + "-" + i;
-					if(controlType == "Luces"){
-                 		//console.log(modName);
-			     		$('#'+ modName).append('<li>\
-                    		<form class="ui-grid-a ui-responsive">\
-							<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
-							<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
-							</form></li>').listview('refresh').trigger("create");
-						console.log("Foco " + i);
-					} else if (controlType == "Contactos"){
-						$('#'+ modName).append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
-						console.log("Contacto " + i);
-					} else if (controlType == "Persiana"){
-                		var controlOrientation = document.getElementById("blindOrientation").value;
+		  			for(var i = 1; i <= controlNumb; i++){
+		    			newModName = modName + "-" + i;
+						if(controlType == "Luces"){
+                			//console.log(modName);
+			     			$('#'+ modName).append('<li>\
+                    			<form class="ui-grid-a ui-responsive">\
+								<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
+								<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
+								</form></li>').listview('refresh').trigger("create");
+							console.log("Foco " + i);
+						} else if (controlType == "Contactos"){
+							$('#'+ modName).append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
+							console.log("Contacto " + i);
+						} else if (controlType == "Persiana"){
+                			var controlOrientation = document.getElementById("blindOrientation").value;
 
-						$('#'+ modName).append('<li>\
-                    		<form class="ui-grid-a ui-responsive">\
-							<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
-							<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
-							</form></li>').listview('refresh').trigger("create");
-						console.log("Persiana " + i);
-                		if (controlOrientation == "Normal"){
-                    		scarlett.enviarOptions(controlAddr, 10);
-                		} else{
-                    		scarlett.enviarOptions(controlAddr, 10);
-                		}
-					}
-				}
+							$('#'+ modName).append('<li>\
+                    			<form class="ui-grid-a ui-responsive">\
+								<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
+								<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
+								</form></li>').listview('refresh').trigger("create");
+							console.log("Persiana " + i);
+                			if (controlOrientation == "Normal"){
+                    			scarlett.enviarOptions(controlAddr, 10);
+                			} else{
+                    			scarlett.enviarOptions(controlAddr, 10);
+                			}
+						}
+		  			}
+        		}
 			}
 		} else{
 			alert("Habitacion vacia");
