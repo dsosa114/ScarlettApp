@@ -55,6 +55,22 @@ var almacen = {
 		almacen.db.transaction(almacen.eliminarMenuDispositivos, almacen.error, almacen.exito);
 	},
 
+	eliminarDispositivoHabitacion: function(nh, nd){
+		almacen.db 					= almacen.conectarDB();
+		almacen.nombreHabitacion	= nh;
+		almacen.nombreDispositivo 	= nd;
+
+		almacen.db.transaction(almacen.borrarDispositivo, almacen.error, almacen.exito);
+
+	},
+
+	borrarDispositivo: function(tx){
+		tx.executeSql('DELETE FROM ' + almacen.nombreHabitacion + ' WHERE named = "' + almacen.nombreDispositivo + '"');
+		navigator.notification.alert("Se elimino " + almacen.nombreDispositivo + " de la habitación " + almacen.nombreHabitacion , function(){
+           	return true;
+        }, "¡Éxito!", "Ok");
+	},
+
 	guardarHabitacionMenu: function(nh){
 		almacen.db   				= almacen.conectarDB();
 		almacen.nombreHabitacion  	= nh;

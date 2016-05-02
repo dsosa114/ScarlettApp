@@ -67,8 +67,8 @@ var scarlett = {
                 }
             });
             $(".deviceItem").off('taphold').on('taphold', function(){
-                var addr = $(this).attr("daddr");
-                alert(addr);
+                //var addr = $(this).attr("daddr");
+                scarlett.confirmAndDelete2($(this));
             });
 		});
 
@@ -167,7 +167,7 @@ var scarlett = {
             $( "#deviceList" ).listview( "refresh" );
             //$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
             try{
-                almacen.eliminarHabitacionMenu(roomName);
+                almacen.eliminarDispositivoHabitacion(scarlett.nombreHabitacion, listitem.attr('name'));
             } catch (error){
                 console.log("No hay base de datos disponible por el momento. Error: " + error);
                 //alert("Ocurrio un error con la base de datos");
@@ -406,19 +406,17 @@ var scarlett = {
 		var controlType = document.getElementById("newModuleType").value;
 		var controlNumb = document.getElementById("newModuleNumb").value;
 		var modName = controlName.split(' ').join('-');
-        var valid_name = true;
+        var valid_name = 0;
 		//alert(controlName + controlAddr + controlType + controlNumb + modName);
         var listItems = $("#deviceList .deviceItem");
-        listItems.each(function(idx, li) {
-            valid_name = false;
-
-            if(modName != $(li).attr('name')){
-                valid_name = true;
+        listItems.each(function(index, li) {
+            if(modName == $(li).attr('name')){
+                valid_name++;
             }
             console.log(modName + ", " + $(li).attr('name') + ", " + valid_name);// and the rest of your code
         });
 
-        if(valid_name){
+        if(valid_name == 0){
 		  //$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
           $("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
           $(".deviceItem").off('taphold').on('taphold', function(){
@@ -454,8 +452,10 @@ var scarlett = {
                 }
 			}
 		  }
+          
         }
         else {
+            valid_name = 0;
             alert("Error: Ese nombre ya esta ocupado por otro dispositivo");
         }
 
