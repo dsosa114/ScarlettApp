@@ -133,7 +133,7 @@ var almacen = {
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'>" + almacen.nombreHabitacion + "</a><a href='#' class='delete'>Delete</a></li>";
+		var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'><img src='img/galeria/1.jpg'/>" + almacen.nombreHabitacion + "</a><a href='#' class='delete'>Delete</a></li>";
 		
 		if(cantidad > 0){
 			try{
@@ -185,29 +185,41 @@ var almacen = {
 				var controlNumb = parseInt(res.rows.item(h).numc);
 				var modName = controlName.split(' ').join('-');
 
-				//alert(controlName + controlAddr + controlType + controlNumb + modName);
+				//$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
+          		$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
+          		$(".deviceItem").off('taphold').on('taphold', function(){
+            		scarlett.confirmAndDelete2($(this));
+          		});
 
-				$("#deviceList").append("<li data-role='list-divider'>" + controlName + "</li>").listview('refresh');
-				for(var i = 1; i <= controlNumb; i++){
-					newModName = modName + "-" + i;
+		  		for(var i = 1; i <= controlNumb; i++){
+		    		newModName = modName + "-" + i;
 					if(controlType == "Luces"){
-						$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
+                 		//console.log(modName);
+			     		$('#'+ modName).append('<li>\
+                    		<form class="ui-grid-a ui-responsive">\
 							<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="L'+ i +'" data-role="flipswitch" class="selector"></div>\
 							<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="L'+ i +'" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 							</form></li>').listview('refresh').trigger("create");
 						console.log("Foco " + i);
 					} else if (controlType == "Contactos"){
-						$("#deviceList").append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
+						$('#'+ modName).append('<li><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="O'+ i +'" data-role="flipswitch" class="selector"></li>').listview('refresh').trigger("create");
 						console.log("Contacto " + i);
 					} else if (controlType == "Persiana"){
-						$("#deviceList").append('<li><form class="ui-grid-a ui-responsive">\
+                		var controlOrientation = document.getElementById("blindOrientation").value;
+
+						$('#'+ modName).append('<li>\
+                    		<form class="ui-grid-a ui-responsive">\
 							<div class="ui-block-a" style="width:15%"><input id="'+ newModName + 'f" type="checkbox" daddr="' + controlAddr + '" control="B" data-role="flipswitch" class="selector"></div>\
 							<div class="ui-block-b" style="width:80%"><input id="'+ newModName + 's" class="slider-int" type="range" daddr="' + controlAddr + '" control="B" min="0" max="100" step="1" value="0" data-highlight="true"/></div>\
 							</form></li>').listview('refresh').trigger("create");
 						console.log("Persiana " + i);
-					}	
+                		if (controlOrientation == "Normal"){
+                    		scarlett.enviarOptions(controlAddr, 10);
+                		} else{
+                    		scarlett.enviarOptions(controlAddr, 10);
+                		}
+					}
 				}
-
 			}
 		} else{
 			alert("Habitacion vacia");
@@ -223,7 +235,7 @@ var almacen = {
 			//si hay reservas en el historial
 			for(var h = 0; h < cantidad; h++){ 
 				var roomName = res.rows.item(h).nameroom;
-    			var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
+    			var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/galeria/1.jpg'/>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
      
        			$("#roomList").append(listItem).listview('refresh');
         	}
