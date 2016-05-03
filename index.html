@@ -58,16 +58,15 @@
                     </li>
                     <li>
                         <select id="newRoomDesc" data-native-menu="false">
-                            <option></option>
-                            <option value="1">Recámara</option>
-                            <option value="2">Comedor</option>
-                            <option value="3">Sala</option>
-                            <option value="4">Cocina</option>
-                            <option value="5">Patio</option>
-                            <option value="6">Garage</option>
-                            <option value="7">Estudio</option>
-                            <option value="8">Baño</option>
-                            <option value="9">Perzonalizada...</option>
+                            <option>Recámara</option>
+                            <option>Comedor</option>
+                            <option>Sala</option>
+                            <option>Cocina</option>
+                            <option>Patio</option>
+                            <option>Cochera</option>
+                            <option>Estudio</option>
+                            <option>Baño</option>
+                            <option>Personalizada...</option>
                         </select>
                         <input class="hidden" id="descripcionPerzonalizada" type="text" placeholder="Escribe una descripción...">
                     </li>
@@ -76,17 +75,40 @@
                     </li>
                     <li data-role="collapsible" data-collapsed="true" data-iconpos="right">
                         <h2>Elije el que más te guste</h2>
-                        <ul data-role="listview">
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/1.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/2.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/3.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/4.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/5.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/6.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/7.jpg"></a></li>
-                            <li><a href="#"><img class="foto-galeria" src="img/galeria/8.jpg"></a></li>
-                            <li><a href="#">Seleccionar archivo...</a></li>
-                        </ul>
+                        <fieldset data-role="controlgroup" class="ui-grid-a" name="iconoCuarto" id="iconoCuarto">
+                            <div class="ui-block-a">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-1" value="cocina" />
+                                <label for="radio-choice-1"><img class="foto-galeria" src="img/iconos/cocina.png"></label>
+                            </div>
+                            <div class="ui-block-b">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-2" value="comedor" />
+                                <label for="radio-choice-2"><img class="foto-galeria" src="img/iconos/comedor.png"></label>
+                            </div>
+                            <div class="ui-block-c">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-3" value="estudio" />
+                                <label for="radio-choice-3"><img class="foto-galeria" src="img/iconos/estudio.png"></label>
+                            </div>
+                            <div class="ui-block-d">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-4" value="garage" />
+                                <label for="radio-choice-4"><img class="foto-galeria" src="img/iconos/garage.png"></label>
+                            </div>
+                            <div class="ui-block-a">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-5" value="patio" />
+                                <label for="radio-choice-5"><img class="foto-galeria" src="img/iconos/patio.png"></label>
+                            </div>
+                            <div class="ui-block-b">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-6" value="recamara" />
+                                <label for="radio-choice-6"><img class="foto-galeria" src="img/iconos/recamara.png"></label>
+                            </div>
+                            <div class="ui-block-c">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-7" value="sala" />
+                                <label for="radio-choice-7"><img class="foto-galeria" src="img/iconos/sala.png"></label>
+                            </div>
+                            <div class="ui-block-d">
+                                <input type="radio" name="radio-choice-1" id="radio-choice-8" value="wc" />
+                                <label for="radio-choice-8"><img class="foto-galeria" src="img/iconos/wc.png"></label>
+                            </div>
+                        </fieldset>
                     </li>
                 </ul>
             </div>

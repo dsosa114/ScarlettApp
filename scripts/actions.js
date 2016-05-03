@@ -36,6 +36,16 @@ var scarlett = {
                 $("#newModuleNumb").selectmenu('enable').selectmenu('refresh');
             }
         });
+        $("#newRoomDesc").on('change', function(){
+            var roomDesc = document.getElementById("newRoomDesc").value;
+
+            if(roomDesc == "Personalizada..."){
+                $("#descripcionPerzonalizada").removeClass('hidden');
+            }
+            else{
+                $("#descripcionPerzonalizada").addClass('hidden');
+            }
+        });
         $(document).on('pagecreate', '#home', function(){
 			//$("#roomList").listview('refresh');
 			$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
@@ -136,6 +146,7 @@ var scarlett = {
                 almacen.eliminarHabitacionMenu(roomName);
             } catch (error){
                 console.log("No hay base de datos disponible por el momento. Error: " + error);
+                $( "#confirm" ).popup( "hide" );
                 //alert("Ocurrio un error con la base de datos");
             }
             //}
@@ -146,6 +157,7 @@ var scarlett = {
             $( "#confirm #yes" ).off();
             $( "#roomList" ).addClass("touch");
             $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
+            $( "#confirm" ).popup( "hide" );
         });
     },
 
@@ -170,6 +182,7 @@ var scarlett = {
                 almacen.eliminarDispositivoHabitacion(scarlett.nombreHabitacion, listitem.attr('name'));
             } catch (error){
                 console.log("No hay base de datos disponible por el momento. Error: " + error);
+                $( "#confirm2" ).popup( "hide" );
                 //alert("Ocurrio un error con la base de datos");
             }
             //}
@@ -178,6 +191,7 @@ var scarlett = {
         $( "#confirm2 #cancel2" ).on( "tap", function() {
             listitem.removeClass( "ui-btn-down-d" );
             $( "#confirm2 #yes2" ).off();
+            $( "#confirm2" ).popup( "hide" );
             //$( "#roomList" ).addClass("touch");
             //$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
         });
@@ -185,11 +199,15 @@ var scarlett = {
 
     agregarNuevoCuarto: function(){
     	var roomName = document.getElementById("newRoomName").value;
-    	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/galeria/1.jpg'/>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
-        
+        var roomDesc = document.getElementById("newRoomDesc").value;
+        var roomIcon = $("#iconoCuarto :radio:checked").val();
+        //console.log(roomIcon);
+
+    	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/iconos/"+ roomIcon +".png'/><h2>" + roomName + "</h2><p>" + roomDesc + "</p></a><a href='#' class='delete'>Delete</a></li>";
+    
         $.mobile.loading('show');
         try{
-            almacen.comprobarExistenciaMenu(roomName);
+            almacen.comprobarExistenciaMenu(roomName, roomIcon, roomName);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
             $.mobile.loading('hide');

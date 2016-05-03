@@ -1,6 +1,8 @@
 var almacen = {
 	db: null,
 	nombreHabitacion: null,
+	descriHabitacion: null,
+	iconoHabitacion: null,
 	nombreDispositivo: null,
 	dirDispositivo: null,
 	tipoDispositivo: null,
@@ -19,9 +21,11 @@ var almacen = {
 
 	},
 
-	comprobarExistenciaMenu: function(nh){
+	comprobarExistenciaMenu: function(nh, dh, ih){
 		almacen.db   				= almacen.conectarDB();
 		almacen.nombreHabitacion  	= nh;
+		almacen.descriHabitacion	= dh;
+		almacen.iconoHabitacion		= ih;
 
 		almacen.db.transaction(almacen.disponibilidadCuartos, almacen.error, almacen.exito);
 	},
@@ -29,7 +33,7 @@ var almacen = {
 	disponibilidadCuartos: function(tx){
 		//Crear tabla de historial
 		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
-		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom, descroom, iconroom)');
 		//Insertar los datos de la nueva reservacion
 		//alert('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		tx.executeSql('SELECT * FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"', [], almacen.comprobarDisponibilidad);
@@ -67,13 +71,16 @@ var almacen = {
 	borrarDispositivo: function(tx){
 		tx.executeSql('DELETE FROM ' + almacen.nombreHabitacion + ' WHERE named = "' + almacen.nombreDispositivo + '"');
 		navigator.notification.alert("Se elimino " + almacen.nombreDispositivo + " de la habitación " + almacen.nombreHabitacion , function(){
+			$( "#confirm2" ).popup( "hide" );
            	return true;
         }, "¡Éxito!", "Ok");
 	},
 
-	guardarHabitacionMenu: function(nh){
+	guardarHabitacionMenu: function(nh, dh, ih){
 		almacen.db   				= almacen.conectarDB();
 		almacen.nombreHabitacion  	= nh;
+		almacen.descriHabitacion	= dh;
+		almacen.iconoHabitacion		= ih;
 
 		almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 	},
@@ -91,6 +98,7 @@ var almacen = {
 		//Eliminar habitacion del menu
 		tx.executeSql('DELETE FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		navigator.notification.alert("Se elimino " + almacen.nombreHabitacion + " y todos sus dispositivos correctamente" , function(){
+				$( "#confirm" ).popup( "hide" );
            		return true;
             }, "¡Éxito!", "Ok");
 	},
@@ -98,10 +106,10 @@ var almacen = {
 	tablaHabitacionMenu: function(tx){
 		//Crear tabla de historial
 		//alert("Agregando a menu: " + almacen.nombreHabitacion + typeof(almacen.nombreHabitacion));
-		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom, descroom, iconroom)');
 		//Insertar los datos de la nueva reservacion
 		//alert('INSERT INTO menu (nameroom) VALUES (' + alamacen.nombreHabitacion );
-		tx.executeSql('INSERT INTO menu (nameroom) VALUES ("' + almacen.nombreHabitacion + '")');
+		tx.executeSql('INSERT INTO menu (nameroom, descroom, iconroom) VALUES ("' + almacen.nombreHabitacion + '", "' + almacen.descriHabitacion + '", "' + almacen.iconoHabitacion + '")');
 		//alert("ya hay cuartos menu");
 	},
 
@@ -126,15 +134,15 @@ var almacen = {
 
 	leerMenuHabitacion: function(tx){
 		//Crear tabla de historial
-		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, nameroom, descroom, iconroom)');
 		//leer tabla historial
 		tx.executeSql('SELECT * FROM menu', [], almacen.recuperarMenu);
 	},
 
 	comprobarDisponibilidad: function(tx, res){
 		var cantidad = res.rows.length;
-		var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'><img src='img/galeria/1.jpg'/>" + almacen.nombreHabitacion + "</a><a href='#' class='delete'>Delete</a></li>";
-		
+		//var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'><img src='img/iconos/recamara.png'/>" + almacen.nombreHabitacion + "</a><a href='#' class='delete'>Delete</a></li>";
+		var listItem = "<li><a href='#' class='roomItem' room='" + almacen.nombreHabitacion + "'><img src='img/iconos/"+ almacen.iconoHabitacion +".png'/><h2>" + almacen.nombreHabitacion + "</h2><p>" + almacen.descriHabitacion + "</p></a><a href='#' class='delete'>Delete</a></li>";
 		if(cantidad > 0){
 			try{
                 navigator.notification.alert("Error, no se pudo agregar el cuarto porque este ya existe.", function(){
@@ -246,8 +254,12 @@ var almacen = {
 			//si hay reservas en el historial
 			for(var h = 0; h < cantidad; h++){ 
 				var roomName = res.rows.item(h).nameroom;
-    			var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/galeria/1.jpg'/>" + roomName + "</a><a href='#' class='delete'>Delete</a></li>";
-     
+    			var roomDesc = res.rows.item(h).descroom;
+        		var roomIcon = res.rows.item(h).iconroom;
+        		//console.log(roomIcon);
+
+    			var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/iconos/"+ roomIcon +".png'/><h2>" + roomName + "</h2><p>" + roomDesc + "</p></a><a href='#' class='delete'>Delete</a></li>";
+    
        			$("#roomList").append(listItem).listview('refresh');
         	}
         	$(".roomItem").off('tap').on("tap", scarlett.llenarPlantillaCuarto);

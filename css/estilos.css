@@ -93,3 +93,7 @@ li.ui-li.border {
 #moduleOptions .orientation{
     display: none !important;
 }
+
+.hidden{
+    display: none !important;
+}
