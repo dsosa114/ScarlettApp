@@ -207,7 +207,7 @@ var scarlett = {
     
         $.mobile.loading('show');
         try{
-            almacen.comprobarExistenciaMenu(roomName, roomIcon, roomName);
+            almacen.comprobarExistenciaMenu(roomName, roomDesc, roomIcon);
         }catch(error){
             console.log("No hay base de datos disponible por el momento. Error: " + error);
             $.mobile.loading('hide');

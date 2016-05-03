@@ -174,7 +174,7 @@ var almacen = {
                 scarlett.confirmAndDelete( listitem );
             });
             
-            almacen.guardarHabitacionMenu(almacen.nombreHabitacion);
+            almacen.guardarHabitacionMenu(almacen.nombreHabitacion, almacen.descriHabitacion, almacen.iconoHabitacion);
             //almacen.db.transaction(almacen.tablaHabitacionMenu, almacen.error, almacen.exito);
 		}
 	},
