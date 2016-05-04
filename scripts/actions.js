@@ -1,5 +1,6 @@
 var scarlett = {
     nombreHabitacion: null,
+    nombreDispositivo: null,
 
 	deviceready: function(){
 		//Esto es necesario para PhoneGap para que pueda ejecutar la aplicación
@@ -14,7 +15,21 @@ var scarlett = {
         } catch (error){
             console.log("Pruebas locales. Error: " + error);
         }
-        // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
+
+        $("#menuListNormal a").on('tap', function(){
+            $(this).addClass('clicked');
+            if(nombreDispositivo.attr('tipo') == "Persiana"){
+                $('#menuControlPersiana').popup('close');
+            }else{
+                $('#menuControl').popup('close');
+            }
+        });
+
+        $("#menuListPersiana a").on('tap', function(){
+            $(this).addClass('clicked');
+            $('#menuControlPersiana').popup('close');
+        });
+
         $("#createNRBtn").tap(scarlett.agregarNuevoCuarto);
         $("#createControlBtn").tap(scarlett.crearNuevoControlCuarto);
         $("#addModuleBtn").tap(scarlett.enviarAddModule);
@@ -46,7 +61,7 @@ var scarlett = {
                 $("#descripcionPerzonalizada").addClass('hidden');
             }
         });
-        $(document).on('pagecreate', '#home', function(){
+        $(document).on('pageshow', '#home', function(){
 			//$("#roomList").listview('refresh');
 			$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
             $(".roomItem").on("taphold", function(){
@@ -76,9 +91,58 @@ var scarlett = {
                     $('#newModuleName').focus();
                 }
             });
+            $( '#menuControl' ).on({
+                popupafterclose: function() {
+                    var sender = $("#menuControl .clicked");
+                    var senderCommand = $("#menuControl .clicked").attr('command');
+                    console.log($("#menuControl .clicked").attr('command'));
+                    if(senderCommand == "delete"){
+                        sender.removeClass("clicked");
+                        setTimeout( function(){ scarlett.confirmAndDelete2(nombreDispositivo)}, 100 );
+                    } else if(senderCommand == "calibrate"){
+                        alert("Clicked button: " + senderCommand);
+                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 12);
+                        sender.removeClass("clicked");
+                    } else if(senderCommand == "edit"){
+                        alert("Clicked button: " + senderCommand);
+                        sender.removeClass("clicked");
+                    }
+                } //$( '#confirm2' ).popup( 'open' ) }
+            });
+            $( '#menuControlPersiana' ).on({
+                popupafterclose: function() {
+                    var sender = $("#menuControlPersiana .clicked");
+                    var senderCommand = $("#menuControlPersiana .clicked").attr('command');
+                    console.log($("#menuControlPersiana .clicked").attr('command'));
+                    if(senderCommand == "delete"){
+                        sender.removeClass("clicked");
+                        setTimeout( function(){ scarlett.confirmAndDelete2(nombreDispositivo)}, 100 );
+                    } else if(senderCommand == "calibrate"){
+                        alert("Clicked button: " + senderCommand);
+                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 12);
+                        sender.removeClass("clicked");
+                    } else if(senderCommand == "set"){
+                        alert("Clicked button: " + senderCommand);
+                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 13);
+                        sender.removeClass("clicked");
+                    } else if(senderCommand == "activate"){
+                        alert("Clicked button: " + senderCommand);
+                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 11);
+                        sender.removeClass("clicked");
+                    } else if(senderCommand == "restore"){
+                        alert("Clicked button: " + senderCommand);
+                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 47);
+                        sender.removeClass("clicked");
+                    } else if(senderCommand == "edit"){
+                        alert("Clicked button: " + senderCommand);
+                        sender.removeClass("clicked");
+                    }
+                } //$( '#confirm2' ).popup( 'open' ) }
+            });
             $(".deviceItem").off('taphold').on('taphold', function(){
                 //var addr = $(this).attr("daddr");
-                scarlett.confirmAndDelete2($(this));
+                $('#menuControl').popup('open');
+                //scarlett.confirmAndDelete2($(this));
             });
 		});
 
@@ -146,18 +210,18 @@ var scarlett = {
                 almacen.eliminarHabitacionMenu(roomName);
             } catch (error){
                 console.log("No hay base de datos disponible por el momento. Error: " + error);
-                $( "#confirm" ).popup( "hide" );
+                //$( "#confirm" ).popup( "close" );
                 //alert("Ocurrio un error con la base de datos");
             }
             //}
         });
         // Remove active state and unbind when the cancel button is clicked
-        $( "#confirm #cancel" ).on( "tap", function() {
+        $("#confirm #cancel").on( "tap", function() {
             listitem.removeClass( "ui-btn-down-d" );
-            $( "#confirm #yes" ).off();
-            $( "#roomList" ).addClass("touch");
+            $("#confirm #yes").off();
+            $("#roomList").addClass("touch");
             $(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
-            $( "#confirm" ).popup( "hide" );
+            //$("#confirm").popup( "close" );
         });
     },
 
@@ -182,7 +246,6 @@ var scarlett = {
                 almacen.eliminarDispositivoHabitacion(scarlett.nombreHabitacion, listitem.attr('name'));
             } catch (error){
                 console.log("No hay base de datos disponible por el momento. Error: " + error);
-                $( "#confirm2" ).popup( "hide" );
                 //alert("Ocurrio un error con la base de datos");
             }
             //}
@@ -191,7 +254,7 @@ var scarlett = {
         $( "#confirm2 #cancel2" ).on( "tap", function() {
             listitem.removeClass( "ui-btn-down-d" );
             $( "#confirm2 #yes2" ).off();
-            $( "#confirm2" ).popup( "hide" );
+            //$( "#confirm2" ).popup( "close" );
             //$( "#roomList" ).addClass("touch");
             //$(".roomItem").on("tap", scarlett.llenarPlantillaCuarto);
         });
@@ -201,6 +264,9 @@ var scarlett = {
     	var roomName = document.getElementById("newRoomName").value;
         var roomDesc = document.getElementById("newRoomDesc").value;
         var roomIcon = $("#iconoCuarto :radio:checked").val();
+        if(roomDesc == "Personalizada..."){
+            roomDesc = document.getElementById("descripcionPerzonalizada").value;
+        }
         //console.log(roomIcon);
 
     	var listItem = "<li><a href='#' class='roomItem' room='" + roomName + "'><img src='img/iconos/"+ roomIcon +".png'/><h2>" + roomName + "</h2><p>" + roomDesc + "</p></a><a href='#' class='delete'>Delete</a></li>";
@@ -436,9 +502,15 @@ var scarlett = {
 
         if(valid_name == 0){
 		  //$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
-          $("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
+          $("#deviceList").append("<li name='"+ modName +"' class='deviceItem' tipo='"+ controlType +"' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
           $(".deviceItem").off('taphold').on('taphold', function(){
-            scarlett.confirmAndDelete2($(this));
+            //scarlett.confirmAndDelete2($(this));
+            scarlett.nombreDispositivo = $(this);
+            if($(this).attr('tipo') == "Persiana"){
+                $('#menuControlPersiana').popup('open');
+            }else{
+                $('#menuControl').popup('open');
+            }
           });
 
 		  for(var i = 1; i <= controlNumb; i++){

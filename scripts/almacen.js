@@ -71,7 +71,7 @@ var almacen = {
 	borrarDispositivo: function(tx){
 		tx.executeSql('DELETE FROM ' + almacen.nombreHabitacion + ' WHERE named = "' + almacen.nombreDispositivo + '"');
 		navigator.notification.alert("Se elimino " + almacen.nombreDispositivo + " de la habitación " + almacen.nombreHabitacion , function(){
-			$( "#confirm2" ).popup( "hide" );
+			$( "#confirm2" ).popup( "close" );
            	return true;
         }, "¡Éxito!", "Ok");
 	},
@@ -98,7 +98,7 @@ var almacen = {
 		//Eliminar habitacion del menu
 		tx.executeSql('DELETE FROM menu WHERE nameroom = "' + almacen.nombreHabitacion + '"');
 		navigator.notification.alert("Se elimino " + almacen.nombreHabitacion + " y todos sus dispositivos correctamente" , function(){
-				$( "#confirm" ).popup( "hide" );
+				$( "#confirm" ).popup( "close" );
            		return true;
             }, "¡Éxito!", "Ok");
 	},
@@ -206,7 +206,12 @@ var almacen = {
 		  			//$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
           			$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
           			$(".deviceItem").off('taphold').on('taphold', function(){
-            			scarlett.confirmAndDelete2($(this));
+            			scarlett.nombreDispositivo = $(this);
+            			if($(this).attr('tipo') == "Persiana"){
+                			$('#menuControlPersiana').popup('open');
+            			}else{
+                			$('#menuControl').popup('open');
+           	 			}
           			});
 
 		  			for(var i = 1; i <= controlNumb; i++){

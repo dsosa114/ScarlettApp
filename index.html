@@ -18,7 +18,7 @@
             <a href="#newRoomDialog" id="newRoomBtn" data-role="button" data-icon="plus" class="ui-btn-active" data-rel="popup">Agregar cuarto</a>
         </div>
         <div class="ui-content">
-            <ul id="roomList" class="touch" data-role="listview" data-icon="false" data-split-icon="delete">
+            <ul id="roomList" class="touch" data-role="listview" data-split-icon="delete" data-inset="true">
             </ul>
         </div>
         <div data-role="footer" data-position="fixed" class="ui-bar">
@@ -88,23 +88,23 @@
                                 <input type="radio" name="radio-choice-1" id="radio-choice-3" value="estudio" />
                                 <label for="radio-choice-3"><img class="foto-galeria" src="img/iconos/estudio.png"></label>
                             </div>
-                            <div class="ui-block-d">
+                            <div class="ui-block-a">
                                 <input type="radio" name="radio-choice-1" id="radio-choice-4" value="garage" />
                                 <label for="radio-choice-4"><img class="foto-galeria" src="img/iconos/garage.png"></label>
                             </div>
-                            <div class="ui-block-a">
+                            <div class="ui-block-b">
                                 <input type="radio" name="radio-choice-1" id="radio-choice-5" value="patio" />
                                 <label for="radio-choice-5"><img class="foto-galeria" src="img/iconos/patio.png"></label>
                             </div>
-                            <div class="ui-block-b">
+                            <div class="ui-block-c">
                                 <input type="radio" name="radio-choice-1" id="radio-choice-6" value="recamara" />
                                 <label for="radio-choice-6"><img class="foto-galeria" src="img/iconos/recamara.png"></label>
                             </div>
-                            <div class="ui-block-c">
+                            <div class="ui-block-a">
                                 <input type="radio" name="radio-choice-1" id="radio-choice-7" value="sala" />
                                 <label for="radio-choice-7"><img class="foto-galeria" src="img/iconos/sala.png"></label>
                             </div>
-                            <div class="ui-block-d">
+                            <div class="ui-block-b">
                                 <input type="radio" name="radio-choice-1" id="radio-choice-8" value="wc" />
                                 <label for="radio-choice-8"><img class="foto-galeria" src="img/iconos/wc.png"></label>
                             </div>
@@ -136,6 +136,36 @@
 
             </ul>
         </div>
+        <div id="menuControl" class="ui-content" data-role="popup" data-position-to="origin">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-role="header">
+                <h1>Opciones del dispositivo</h1>
+            </div>
+            <ul id="menuListNormal" data-role="listview" data-inset="true">
+                <li data-icon="gear"><a href="#" class="btn-edit" command="edit">Editar</a></li>
+                <li><a href="#" class="btn-calibrate" command="calibrate">Calibrar</a></li>
+                <li data-icon="delete"><a href="#" command="delete" class="btn-delete">Eliminar</a></li>
+            </ul>
+        </div><!-- /popup -->
+        <div id="menuControlPersiana" class="ui-content" data-role="popup" data-position-to="origin">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-role="header">
+                <h1>Opciones del dispositivo</h1>
+            </div>
+            <ul id="menuListPersiana" data-role="listview" data-inset="true">
+                <li data-icon="gear"><a href="#" class="btn-edit" command="edit">Editar</a></li>
+                <li data-role="collapsible" data-collapsed="true" data-iconpos="right" data-inset="false">
+                    <h2>Configuración</h2>
+                    <ul data-role="listview">
+                        <li><a href="#" class="btn-calibrate" command="calibrate">Calibrar</a></li>
+                        <li><a href="#" class="btn-set" command="set">Establecer límite</a></li>
+                        <li><a href="#" class="btn-activate" command="activate">Activar</a></li>
+                        <li><a href="#" class="btn-restore" command="restore">Restaurar</a></li>
+                    </ul>
+                </li>
+                <li data-icon="delete"><a href="#" command="delete" class="btn-delete">Eliminar</a></li>
+            </ul>
+        </div><!-- /popup -->
         <div id="confirm2" class="ui-content" data-role="popup">
             <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
             <div data-role="header">

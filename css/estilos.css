@@ -61,6 +61,10 @@ li.ui-li.border {
 }
 
 /* Custom styling for the popup */
+#menuControl {
+    position: relative !important;
+}
+
 #confirm {
     border: 1px solid;
     border-color: #044062; /* Fallback for older browsers */
