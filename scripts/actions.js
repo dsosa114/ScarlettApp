@@ -94,10 +94,10 @@ var scarlett = {
                     console.log($("#menuControl .clicked").attr('command'));
                     if(senderCommand == "delete"){
                         sender.removeClass("clicked");
-                        setTimeout( function(){ scarlett.confirmAndDelete2(nombreDispositivo)}, 100 );
+                        setTimeout( function(){ scarlett.confirmAndDelete2(scarlett.nombreDispositivo)}, 100 );
                     } else if(senderCommand == "calibrate"){
                         alert("Clicked button: " + senderCommand);
-                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 12);
+                        scarlett.enviarOptions(scarlett.nombreDispositivo.attr('daddr'), 12);
                         sender.removeClass("clicked");
                     } else if(senderCommand == "edit"){
                         alert("Clicked button: " + senderCommand);
@@ -112,26 +112,26 @@ var scarlett = {
                     console.log($("#menuControlPersiana .clicked").attr('command'));
                     if(senderCommand == "delete"){
                         sender.removeClass("clicked");
-                        setTimeout( function(){ scarlett.confirmAndDelete2(nombreDispositivo)}, 100 );
+                        setTimeout( function(){ scarlett.confirmAndDelete2(scarlett.nombreDispositivo)}, 100 );
                     } else if(senderCommand == "calibrate"){
-                        alert("Clicked button: " + senderCommand);
-                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 12);
+                        scarlett.enviarOptions(scarlett.nombreDispositivo.attr('daddr'), 12);
                         sender.removeClass("clicked");
+                        alert("Clicked button: " + senderCommand);
                     } else if(senderCommand == "set"){
-                        alert("Clicked button: " + senderCommand);
-                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 13);
+                        scarlett.enviarOptions(scarlett.nombreDispositivo.attr('daddr'), 13);
                         sender.removeClass("clicked");
+                        alert("Clicked button: " + senderCommand);
                     } else if(senderCommand == "activate"){
-                        alert("Clicked button: " + senderCommand);
-                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 11);
+                        scarlett.enviarOptions(scarlett.nombreDispositivo.attr('daddr'), 11);
                         sender.removeClass("clicked");
+                        alert("Clicked button: " + senderCommand);
                     } else if(senderCommand == "restore"){
-                        alert("Clicked button: " + senderCommand);
-                        scarlett.enviarOptions(nombreDispositivo.attr('daddr'), 47);
+                        scarlett.enviarOptions(scarlett.nombreDispositivo.attr('daddr'), 47);
                         sender.removeClass("clicked");
+                        alert("Clicked button: " + senderCommand);
                     } else if(senderCommand == "edit"){
-                        alert("Clicked button: " + senderCommand);
                         sender.removeClass("clicked");
+                        alert("Clicked button: " + senderCommand);
                     }
                 } //$( '#confirm2' ).popup( 'open' ) }
             });
@@ -635,8 +635,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//
-$(scarlett.deviceready);
+//$(scarlett.deviceready);
 //console.log("Pruebas locales. Error: " + error);
 //Internet Explorer
-//$(scarlett.onDeviceReady);
+//
+$(scarlett.onDeviceReady);
