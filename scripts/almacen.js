@@ -204,7 +204,7 @@ var almacen = {
 
         		if(valid_name == 0){
 		  			//$("#deviceList").append("<li data-role='list-divider' daddr='" + controlAddr + "'>" + controlName + "</li>").listview('refresh');
-          			$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
+          			$("#deviceList").append("<li name='"+ modName +"' class='deviceItem' tipo='"+ controlType +"' data-role='collapsible' data-collapsed='false' data-iconpos='right' daddr='" + controlAddr + "'><h2>" + controlName + "</h2><ul data-role='listview' id='" + modName + "''></ul></li>").listview('refresh').trigger("create");
           			$(".deviceItem").off('taphold').on('taphold', function(){
             			scarlett.nombreDispositivo = $(this);
             			if($(this).attr('tipo') == "Persiana"){

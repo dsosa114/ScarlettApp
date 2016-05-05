@@ -18,11 +18,7 @@ var scarlett = {
 
         $("#menuListNormal a").on('tap', function(){
             $(this).addClass('clicked');
-            if(nombreDispositivo.attr('tipo') == "Persiana"){
-                $('#menuControlPersiana').popup('close');
-            }else{
-                $('#menuControl').popup('close');
-            }
+            $('#menuControl').popup('close');
         });
 
         $("#menuListPersiana a").on('tap', function(){
