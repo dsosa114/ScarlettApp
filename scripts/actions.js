@@ -635,8 +635,8 @@ var scarlett = {
 }
 
 //PhoneGap
-//$(scarlett.deviceready);
+//
+$(scarlett.deviceready);
 //console.log("Pruebas locales. Error: " + error);
 //Internet Explorer
-//
-$(scarlett.onDeviceReady);
+//$(scarlett.onDeviceReady);
